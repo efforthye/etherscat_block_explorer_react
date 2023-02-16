@@ -7,11 +7,23 @@ const cookieParser = require("cookie-parser");
 
 // database
 const db = require("./models/index.js");
+// router
+const routes = require("./routes/index.js");
+// cors
+const cors = require("cors");
 
 dotenv.config();
 const app = express();
 
 app.set("port", process.env.PORT || 8080);
+
+// cors
+app.use(
+    cors({
+        origin: "http://localhost:3000",
+        // credentials: true
+    }),
+);
 
 app.use((req, res, next) => {
     if (process.env.NODE_ENV === "production") morgan("combined")(req, res, next);
@@ -36,6 +48,9 @@ app.use(
         name: "session-cookie",
     })
 );
+
+// router : cors를 설정한 이후에 적용
+app.use("/api", routes);
 
 // database
 db.sequelize

@@ -1,7 +1,5 @@
-// 블록에 맞게 해시 등의 컬럼 지정해주기
-
 const Sequelize = require("sequelize");
-module.exports = class Board extends Sequelize.Model {
+module.exports = class Test extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
             title: {
@@ -12,8 +10,8 @@ module.exports = class Board extends Sequelize.Model {
             },
         }, {
             sequelize,
-            modelName: "Board",
-            tableName: "board",
+            modelName: "Test",
+            tableName: "test",
             paranoid: true,
             underscored: true,
             timestamps: true,
