@@ -5,6 +5,9 @@ const dotenv = require("dotenv");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 
+// database
+const db = require("./models/index.js");
+
 dotenv.config();
 const app = express();
 
@@ -33,6 +36,16 @@ app.use(
         name: "session-cookie",
     })
 );
+
+// database
+db.sequelize
+    .sync({ force: false })
+    .then(() => {
+        console.log("DB 연결됨");
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
 app.listen(app.get("port"), () => {
     console.log(`${app.get("port")} 서버를 열였습니다.`);
