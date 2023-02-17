@@ -13,6 +13,16 @@ const cors = require("cors");
 const routes = require("./routes/index.js");
 // web3
 const Web3 = require("web3");
+// websocket
+const websocket = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8082"));
+
+// block mining console
+// database 저장하기
+websocket.eth.subscribe("newBlockHeaders", (error, result) => {
+    if (!error) {
+        console.log(result);
+    }
+});
 
 dotenv.config();
 const app = express();

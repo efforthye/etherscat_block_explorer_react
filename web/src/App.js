@@ -86,7 +86,7 @@ const Wrap = styled.div`
   border-bottom: 1px solid rgb(245,245,245);
   /* width: 80%; */
 
-  height: 700px; 
+  /* height: 700px;  */
 `;
 const Header = styled.div`
   height: 78px;

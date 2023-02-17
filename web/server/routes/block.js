@@ -11,14 +11,27 @@ router.post("/info", async (req, res) => {
 
     // 총 블록 개수
     const newBlockNumber = await web3.eth.getBlockNumber();
-    console.log(newBlockNumber);
 
-    // 블록 정보(블록 번호 또는 블록 해시)
-    // for문 돌려서 최신 블록 6개 배열 보내기
-    // 현재 가장 마지막 블록 정보 가져옴
+    // 마지막 블록의 정보
     const blockInfo = await web3.eth.getBlock(newBlockNumber);
 
     res.send(blockInfo);
+});
+
+
+// 마지막 6개 블록
+router.post("/latest", async (req, res) => {
+
+    // 총 블록 개수
+    const newBlockNumber = await web3.eth.getBlockNumber();
+
+    // 최신 6개 블록
+    let latestBlocks = [];
+    for (let i = 0; i < 6; i++) {
+        latestBlocks[i] = await web3.eth.getBlock(newBlockNumber - i);
+    }
+
+    res.send(latestBlocks);
 });
 
 module.exports = router;
