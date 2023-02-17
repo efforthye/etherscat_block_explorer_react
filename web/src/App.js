@@ -1,20 +1,45 @@
 // import logo from './logo.svg';
 // import './App.css';
+import { useEffect, useState } from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { getEthereumPrice } from './api';
 import BlockContainer from './containers/Block';
 import MainContainer from './containers/Main';
 import TestContainer from './containers/Test';
 
+
+// 이더리움 가격 등의 정보 조회 함수
+const ethereumPrice = (setPrices) => {
+  // getBlockInfo : 해당 번호의 블록 상세 정보를 불러온다.
+  getEthereumPrice().then((prices) => {
+    setPrices(prices);
+  });
+}
+
+
 function App() {
+
+  // 이더리움 가격 정보(이더가격, 퍼센트, 가스비용)
+  const [prices, setPrices] = useState([]);
+  useEffect(() => {
+    ethereumPrice(setPrices);
+  }, []);
+
   return (
     <AllWrap className='allWrap'>
 
       {/* 상단 고정 바 */}
       <TopPriceBar>
         <PriceBar>
-          <Eth>ETH Price : <span>$1,682.43 (+6.14%)</span></Eth>
-          <Gas>Gas : <span>27 Gwei</span></Gas>
+          <Eth>
+            ETH Price : <BlueSpan>{prices[0]}</BlueSpan>
+
+            {/* 마이너스이면 red, 아니면 녹색으로 변경하기... */}
+            <RedSpan>{prices[2]}</RedSpan>
+
+          </Eth>
+          <Gas>Gas : <BlueSpan>{prices[1]}</BlueSpan></Gas>
         </PriceBar>
       </TopPriceBar>
 
@@ -117,4 +142,10 @@ const Footer = styled.img`
 const LogoImg = styled.img`
   width: 150px;
   cursor: pointer;
+`;
+const BlueSpan = styled.span`
+  color: #0784c3;
+`;
+const RedSpan = styled.span`
+  color: #dc3545;
 `;

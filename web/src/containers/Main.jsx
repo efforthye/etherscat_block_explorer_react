@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getBlockInfo, getlatestBlocks } from "../api";
+import { getBlockInfo, getEthereumPrice, getlatestBlocks } from "../api";
 import MainComponent from "../components/Main";
 
 
@@ -30,9 +30,6 @@ const MainContainer = () => {
     // 마지막 6개 블록 정보 배열
     const [latestBlocks, setLatestBlocks] = useState([]);
 
-    // 0번째 블록 정보 로드
-    // 가장 최근 블록으로 변경
-    // 넘버 없이 보내기
     useEffect(() => {
         zeroBlock(setBlockInfo, 0);
         latestBlockArr(setLatestBlocks);

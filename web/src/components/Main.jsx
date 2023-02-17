@@ -42,9 +42,8 @@ const MainComponent = ({ blockInfo, latestBlocks }) => {
 
                 </BlocksWrap>
                 <TransactionsWrap>
-                    <div>하이</div>
-                    <div>하이</div>
-                    <div>하이</div>
+                    <div>Latest Transactions</div>
+                    {/* <div>{prices[0]}</div> */}
                     <div>하이</div>
                 </TransactionsWrap>
             </InfoWrap>
@@ -97,6 +96,10 @@ const BlocksWrap = styled.div`
     border-radius: 10px;
     --bs-card-box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
     box-shadow: var(--bs-card-box-shadow);
+    div{
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
 `;
 const TransactionsWrap = styled.div`
     display: inline-block;

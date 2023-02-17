@@ -23,3 +23,9 @@ export const getBlockInfo = async (blockNumber) => {
 export const getlatestBlocks = async () => {
     return (await request.post("/block/latest")).data;
 }
+
+
+// 이더리움 가격 등의 정보 불러오는 요청
+export const getEthereumPrice = async () => {
+    return (await request.post("/test/crawler")).data;
+}
