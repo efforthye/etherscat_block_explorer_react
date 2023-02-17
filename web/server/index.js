@@ -7,10 +7,12 @@ const cookieParser = require("cookie-parser");
 
 // database
 const db = require("./models/index.js");
-// router
-const routes = require("./routes/index.js");
 // cors
 const cors = require("cors");
+// router
+const routes = require("./routes/index.js");
+// web3
+const Web3 = require("web3");
 
 dotenv.config();
 const app = express();
@@ -21,7 +23,7 @@ app.set("port", process.env.PORT || 8080);
 app.use(
     cors({
         origin: "http://localhost:3000",
-        // credentials: true
+        credentials: true
     }),
 );
 
@@ -49,6 +51,15 @@ app.use(
     })
 );
 
+
+// 8082 websocket server open
+const web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8082"));
+web3.eth.subscribe("newBlockHeaders", (error, result) => {
+    if (!error) {
+        console.log(result);
+    }
+});
+
 // router : cors를 설정한 이후에 적용
 app.use("/api", routes);
 
@@ -62,6 +73,7 @@ db.sequelize
         console.log(err);
     });
 
+// 8080 express server open
 app.listen(app.get("port"), () => {
     console.log(`${app.get("port")} 서버를 열였습니다.`);
 });

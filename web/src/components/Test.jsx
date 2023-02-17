@@ -27,3 +27,14 @@ const Wrap = styled.div`
         }
     }
 `;
+
+
+
+
+
+// const BlockComponent = () => {
+//     return (
+//         <div>하이</div>
+//     )
+// }
+// export default BlockComponent;

@@ -23,7 +23,20 @@ const TestContainer = () => {
             redirect("/");
         }
     }
+
     return <TestComponent changeFuncs={{ changeTitle, changeText }} upload={upload} />
 }
 
 export default TestContainer;
+
+
+
+
+
+// const BlockComponent = require("../components/Block.jsx");
+
+// const BlockContainer = () => {
+//     return <BlockComponent />
+// }
+
+// export default BlockContainer;
