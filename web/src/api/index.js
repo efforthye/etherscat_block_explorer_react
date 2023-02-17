@@ -6,9 +6,14 @@ const request = axios.create({
 });
 
 
-// 테스트 데이터 요청 보내기 (db에 값 저장)
+// 테스트 데이터 요청 (db 값 저장)
 export const newBoard = async (boardData) => {
     return (await request.post("/test/new", boardData)).data;
+}
+
+// 이더리움 가격 정보 요청
+export const getEthereumPrice = async () => {
+    return (await request.post("/test/crawler")).data;
 }
 
 
@@ -22,10 +27,4 @@ export const getBlockInfo = async (blockNumber) => {
 // 마지막 블록 6개 가져오는 요청 ㅇ
 export const getlatestBlocks = async () => {
     return (await request.post("/block/latest")).data;
-}
-
-
-// 이더리움 가격 등의 정보 불러오는 요청
-export const getEthereumPrice = async () => {
-    return (await request.post("/test/crawler")).data;
 }

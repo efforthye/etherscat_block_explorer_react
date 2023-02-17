@@ -32,18 +32,17 @@ router.post("/crawler", async (req, res) => {
 
     let hi = [];
 
+    // ethereum price, gas price
     elements.each((idx, el) => {
         // console.log($(el).text());
-        // hi += $(el).text();
         hi.push($(el).text());
     });
+    // ethereum price percent
     elements2.each((idx, el) => {
         // console.log($(el).text());
-        // hi += $(el).text();
         hi.push($(el).text());
     });
 
-    console.log(hi);
     res.send(hi);
 
 });

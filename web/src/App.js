@@ -8,6 +8,10 @@ import BlockContainer from './containers/Block';
 import MainContainer from './containers/Main';
 import TestContainer from './containers/Test';
 
+// https://ssddo-story.tistory.com/15 -> 폰트어썸 변수명 카넬으로 변경
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGasPump } from "@fortawesome/free-solid-svg-icons";
+
 
 // 이더리움 가격 등의 정보 조회 함수
 const ethereumPrice = (setPrices) => {
@@ -26,6 +30,13 @@ function App() {
     ethereumPrice(setPrices);
   }, []);
 
+  // 10초마다 가격 불러온다.
+  useEffect(() => {
+    setTimeout(() => {
+      ethereumPrice(setPrices);
+    }, 10000);
+  });
+
   return (
     <AllWrap className='allWrap'>
 
@@ -39,7 +50,10 @@ function App() {
             <RedSpan>{prices[2]}</RedSpan>
 
           </Eth>
-          <Gas>Gas : <BlueSpan>{prices[1]}</BlueSpan></Gas>
+          <Gas>
+            <FontAwesomeIcon icon={faGasPump} />{" "}
+            Gas : <BlueSpan>{prices[1]}</BlueSpan>
+          </Gas>
         </PriceBar>
       </TopPriceBar>
 
@@ -50,13 +64,13 @@ function App() {
             <LogoImg alt="logo" src="images/logo.png" />
           </Link>
         </div>
-        <div>
+        <RouterLink>
           <Link to={"/block"}>Block</Link>
           <Link to={"/transaction"}>Transaction</Link>
           <Link to={"/wallet"}>Wallet</Link>
           <Link to={"/mining"}>Mining</Link>
           <Link to={"/test"}>DB</Link>
-        </div>
+        </RouterLink>
       </Header>
 
       <Wrap className="wrap">
@@ -81,8 +95,14 @@ export default App;
 
 const AllWrap = styled.div`
   /* background-color: rgb(245,245,245); */
+  *::selection{
+    /* background: #CDE6F3; */
+    background: #0784c3;
+    color: white;
+  }
 `;
 const TopPriceBar = styled.div`
+  z-index: 1;
   height: 65px;
   position: sticky;
   top: 0; left: 0;
@@ -148,4 +168,10 @@ const BlueSpan = styled.span`
 `;
 const RedSpan = styled.span`
   color: #dc3545;
+`;
+const RouterLink = styled.div`
+  a:hover{
+    color: #0784c3;
+    transition: all 0.5s;
+  }
 `;
