@@ -8,6 +8,10 @@ import BlockContainer from './containers/Block';
 import MainContainer from './containers/Main';
 import TestContainer from './containers/Test';
 
+// https://ssddo-story.tistory.com/15 -> 폰트어썸 변수명 카넬으로 변경
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGasPump } from "@fortawesome/free-solid-svg-icons";
+
 
 // 이더리움 가격 등의 정보 조회 함수
 const ethereumPrice = (setPrices) => {
@@ -39,7 +43,10 @@ function App() {
             <RedSpan>{prices[2]}</RedSpan>
 
           </Eth>
-          <Gas>Gas : <BlueSpan>{prices[1]}</BlueSpan></Gas>
+          <Gas>
+            <FontAwesomeIcon icon={faGasPump} />{" "}
+            Gas : <BlueSpan>{prices[1]}</BlueSpan>
+          </Gas>
         </PriceBar>
       </TopPriceBar>
 
