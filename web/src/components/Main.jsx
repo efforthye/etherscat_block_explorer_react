@@ -1,22 +1,24 @@
 import styled from "styled-components";
+import background from "../images/background5.jpg";
 
 const MainComponent = ({ blockInfo, latestBlocks }) => {
     return (
         <>
-            <SearchBox>
-                <SearchSelect name="" id="">
-                    <option value="all">All Filters</option>
-                    <option value="address">Addresses</option>
-                    <option value="token">Tokens</option>
-                    <option value="tag">Name Tags</option>
-                    <option value="label">Labels</option>
-                    <option value="site">Websites</option>
-                </SearchSelect>
-                <SearchInput placeholder="Search By Address / Txn Hash / Block / Token / Domain Name" />
-            </SearchBox>
-            {/* <div>
-                <SearchBackground src="../images/background5.jpg" alt="space" />
-            </div> */}
+            {/* <SearchBackgroundImg src="../images/background5.jpg" alt="space" /> */}
+            <SearchBackground>
+                <div style={{ color: `#fff`, fontSize: "18px", fontWeight: "600", position: "absolute", top: "40px", left: "25%" }}>The Ethereum Blockchain Explorer</div>
+                <SearchBox>
+                    <SearchSelect name="" id="">
+                        <option value="all">All Filters</option>
+                        <option value="address">Addresses</option>
+                        <option value="token">Tokens</option>
+                        <option value="tag">Name Tags</option>
+                        <option value="label">Labels</option>
+                        <option value="site">Websites</option>
+                    </SearchSelect>
+                    <SearchInput placeholder="Search By Address / Txn Hash / Block / Token / Domain Name" />
+                </SearchBox>
+            </SearchBackground>
 
 
             {/* 마지막 블록 정보 */}
@@ -56,32 +58,44 @@ const MainComponent = ({ blockInfo, latestBlocks }) => {
 export default MainComponent;
 
 
+const SearchBackground = styled.div`
+    background-image: url("../images/background5.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: 10% 30%; 
+    position: relative;
+    display: flex;
+    justify-content: center;
+`;
 const SearchBox = styled.div`
-    box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+    position: absolute;
+    top: 80px;
+    background-color: #fff;
+    /* box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%); */
+    box-shadow: 0 2px 5px 1px rgb(64 60 67 / 100%);
     border-radius: 24px;
     cursor: text;
-    height: 40px;
-    width: 500px;
-    margin: 30px auto;
+    height: 44px;
+    width: 50%;
+    /* margin: 30px auto; */
+    margin: 0 auto;
     display: flex;
     align-items: center;
     padding: 0 20px;
 `;
 const SearchSelect = styled.select`
-    margin-right: 7px;
+    margin-right: 10px;
     height: 25px;
     border-radius: 5px;
-`;
-const SearchInput = styled.input`
-    width: 400px;
-    height: 20px;
     border: none;
 `;
-const SearchBackground = styled.img`
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    object-position: 10% 30%; 
+const SearchInput = styled.input`
+    width: 80%;
+    height: 25px;
+    border: none;
 `;
 const InfoWrap = styled.div`
     /* background-color: aliceblue; */

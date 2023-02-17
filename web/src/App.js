@@ -90,6 +90,7 @@ const AllWrap = styled.div`
   /* background-color: rgb(245,245,245); */
 `;
 const TopPriceBar = styled.div`
+  z-index: 1;
   height: 65px;
   position: sticky;
   top: 0; left: 0;
