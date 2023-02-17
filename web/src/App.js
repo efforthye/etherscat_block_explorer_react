@@ -95,6 +95,11 @@ export default App;
 
 const AllWrap = styled.div`
   /* background-color: rgb(245,245,245); */
+  *::selection{
+    /* background: #CDE6F3; */
+    background: #0784c3;
+    color: white;
+  }
 `;
 const TopPriceBar = styled.div`
   z-index: 1;
@@ -166,7 +171,7 @@ const RedSpan = styled.span`
 `;
 const RouterLink = styled.div`
   a:hover{
-    color: #4C7CAD;
+    color: #0784c3;
     transition: all 0.5s;
   }
 `;

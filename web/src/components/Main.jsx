@@ -1,14 +1,30 @@
 import styled from "styled-components";
 import background from "../images/background5.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 const MainComponent = ({ blockInfo, latestBlocks }) => {
+
+    // 검색 
+    const [filter, setFilter] = useState("all");
+    const [search, setSearch] = useState("");
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            alert(filter);
+            alert(e.target.value);
+        }
+    }
+
     return (
         <>
             {/* <SearchBackgroundImg src="../images/background5.jpg" alt="space" /> */}
             <SearchBackground>
                 <div style={{ color: `#fff`, fontSize: "18px", fontWeight: "600", position: "absolute", top: "40px", left: "25%" }}>The Ethereum Blockchain Explorer</div>
                 <SearchBox>
-                    <SearchSelect name="" id="">
+                    <SearchSelect onChange={(e) => {
+                        setFilter(e.target.value);
+                    }}>
                         <option value="all">All Filters</option>
                         <option value="address">Addresses</option>
                         <option value="token">Tokens</option>
@@ -16,7 +32,16 @@ const MainComponent = ({ blockInfo, latestBlocks }) => {
                         <option value="label">Labels</option>
                         <option value="site">Websites</option>
                     </SearchSelect>
-                    <SearchInput placeholder="Search By Address / Txn Hash / Block / Token / Domain Name" />
+                    <SearchInput placeholder="Search By Address / Txn Hash / Block / Token / Domain Name" onKeyUp={(e) => {
+                        setSearch(e.target.value); // input value
+                        handleKeyPress(e); // enter
+                    }} />
+                    <SearchIconDiv onClick={() => {
+                        alert(filter);
+                        alert(search);
+                    }}>
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    </SearchIconDiv>
                 </SearchBox>
             </SearchBackground>
 
@@ -85,17 +110,22 @@ const SearchBox = styled.div`
     display: flex;
     align-items: center;
     padding: 0 20px;
+    justify-content: space-around;
 `;
 const SearchSelect = styled.select`
-    margin-right: 10px;
-    height: 25px;
+    margin-right: 5px;
+    height: 28px;
     border-radius: 5px;
     border: none;
+    cursor: pointer;
 `;
 const SearchInput = styled.input`
     width: 80%;
-    height: 25px;
+    height: 28px;
     border: none;
+`;
+const SearchIconDiv = styled.div`
+    cursor: pointer;
 `;
 const InfoWrap = styled.div`
     /* background-color: aliceblue; */
@@ -103,22 +133,26 @@ const InfoWrap = styled.div`
     display: flex;
     justify-content: space-between;
     margin: 60px auto;
-`;
-const BlocksWrap = styled.div`
-    display: inline-block;
-    width: 49.4%;
-    border-radius: 10px;
-    --bs-card-box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
-    box-shadow: var(--bs-card-box-shadow);
-    div{
-        text-overflow: ellipsis;
-        overflow: hidden;
+
+    &>div{
+        display: inline-block;
+        width: 49.4%;
+        border-radius: 10px;
+        --bs-card-box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
+        box-shadow: var(--bs-card-box-shadow);
+        --bs-card-border-color: var(--bs-border-color);
+        border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+        border: 1px solid #e9ecef;
+        div{
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
     }
 `;
+const BlocksWrap = styled.div`
+
+`;
 const TransactionsWrap = styled.div`
-    display: inline-block;
-    width: 49.4%;
-    border-radius: 10px;
-    --bs-card-box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
-    box-shadow: var(--bs-card-box-shadow);
+
 `;
