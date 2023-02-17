@@ -30,6 +30,13 @@ function App() {
     ethereumPrice(setPrices);
   }, []);
 
+  // 10초마다 가격 불러온다.
+  useEffect(() => {
+    setTimeout(() => {
+      ethereumPrice(setPrices);
+    }, 10000);
+  });
+
   return (
     <AllWrap className='allWrap'>
 
@@ -57,13 +64,13 @@ function App() {
             <LogoImg alt="logo" src="images/logo.png" />
           </Link>
         </div>
-        <div>
+        <RouterLink>
           <Link to={"/block"}>Block</Link>
           <Link to={"/transaction"}>Transaction</Link>
           <Link to={"/wallet"}>Wallet</Link>
           <Link to={"/mining"}>Mining</Link>
           <Link to={"/test"}>DB</Link>
-        </div>
+        </RouterLink>
       </Header>
 
       <Wrap className="wrap">
@@ -156,4 +163,10 @@ const BlueSpan = styled.span`
 `;
 const RedSpan = styled.span`
   color: #dc3545;
+`;
+const RouterLink = styled.div`
+  a:hover{
+    color: #4C7CAD;
+    transition: all 0.5s;
+  }
 `;
