@@ -24,6 +24,7 @@ router.post("/latest", async (req, res) => {
 
     // 총 블록 개수
     const newBlockNumber = await web3.eth.getBlockNumber();
+    console.log(newBlockNumber);
 
     // 최신 6개 블록
     let latestBlocks = [];

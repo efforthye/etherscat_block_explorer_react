@@ -17,7 +17,7 @@ const Web3 = require("web3");
 const websocket = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8082"));
 
 // block mining console
-// database 저장하기
+// 화면 랜더링 및 database 저장하기
 websocket.eth.subscribe("newBlockHeaders", (error, result) => {
     if (!error) {
         console.log(result);

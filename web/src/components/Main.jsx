@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import background from "../images/background5.jpg";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { faHive } from "@fortawesome/free-brands-svg-icons";
+import BlockIcon from "../images/block2.png"
 
 const MainComponent = ({ blockInfo, latestBlocks }) => {
 
@@ -18,7 +19,6 @@ const MainComponent = ({ blockInfo, latestBlocks }) => {
 
     return (
         <>
-            {/* <SearchBackgroundImg src="../images/background5.jpg" alt="space" /> */}
             <SearchBackground>
                 <div style={{ color: `#fff`, fontSize: "18px", fontWeight: "600", position: "absolute", top: "40px", left: "25%" }}>The Ethereum Blockchain Explorer</div>
                 <SearchBox>
@@ -45,7 +45,6 @@ const MainComponent = ({ blockInfo, latestBlocks }) => {
                 </SearchBox>
             </SearchBackground>
 
-
             {/* 마지막 블록 정보 */}
             {/* <div>
                 {blockInfo.map((item, index) =>
@@ -64,7 +63,21 @@ const MainComponent = ({ blockInfo, latestBlocks }) => {
                 <BlocksWrap>
                     <div>Latest Blocks</div>
                     {latestBlocks.map((block, index) =>
-                        <div key={index}>{block.hash}</div>
+                        <div key={index} style={{ margin: "30px 20px", borderBottom: "1px solid #E9ECEF" }}>
+                            <IconWrap>
+                                <img src={BlockIcon} alt={"블록"}></img>
+                            </IconWrap>
+
+                            {/* 해당 블록 상세 정보로 이동 */}
+                            <div key={`number-${index}`}>{block.number}</div>
+                            <div key={`timestamp-${index}`}>{block.timestamp}</div>
+
+                            {/* 해당 채굴자 Wallet 상세 정보로 이동 */}
+                            <div key={`miner-${index}`}>{block.miner}</div>
+
+                            {/* 해당 트랜잭션 상세 정보로 이동 */}
+                            <div key={`transactions-${index}`}>{block.transactions.length}</div>
+                        </div>
                     )}
 
                 </BlocksWrap>
@@ -155,4 +168,26 @@ const BlocksWrap = styled.div`
 `;
 const TransactionsWrap = styled.div`
 
+`;
+const IconWrap = styled.div`
+    width: 60px;
+    height: 60px;
+    background-color: #F8F9FA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    &>svg, &>img{
+        width: 60%;
+        height: 60%;
+        color: #a6afc0;
+        rotate: 90deg;
+        animation: rotate_image 10s linear infinite;
+        transform-origin: 50% 50%;
+    }
+    @keyframes rotate_image{
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 `;

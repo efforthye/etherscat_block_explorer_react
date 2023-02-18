@@ -28,18 +28,17 @@ router.post("/crawler", async (req, res) => {
 
     const $ = cheerio.load(resp.data);
     const elements = $('.text-muted a');
-    const elements2 = $('.text-muted span .text-danger');
+    // const elements2 = $('.text-muted span .text-danger');
+    const elements2 = $('.text-muted span span');
 
     let hi = [];
 
     // ethereum price, gas price
     elements.each((idx, el) => {
-        // console.log($(el).text());
         hi.push($(el).text());
     });
     // ethereum price percent
     elements2.each((idx, el) => {
-        // console.log($(el).text());
         hi.push($(el).text());
     });
 

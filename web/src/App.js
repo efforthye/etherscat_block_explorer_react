@@ -45,10 +45,8 @@ function App() {
         <PriceBar>
           <Eth>
             ETH Price : <BlueSpan>{prices[0]}</BlueSpan>
-
-            {/* 마이너스이면 red, 아니면 녹색으로 변경하기... */}
-            <RedSpan>{prices[2]}</RedSpan>
-
+            {/* 이더리움 가격 */}
+            {prices[2]?.includes("+") ? <GreenSpan>{prices[2]}</GreenSpan> : <RedSpan>{prices[2]}</RedSpan>}
           </Eth>
           <Gas>
             <FontAwesomeIcon icon={faGasPump} />{" "}
@@ -168,6 +166,9 @@ const BlueSpan = styled.span`
 `;
 const RedSpan = styled.span`
   color: #dc3545;
+`;
+const GreenSpan = styled.span`
+  color: #00a186
 `;
 const RouterLink = styled.div`
   a:hover{
