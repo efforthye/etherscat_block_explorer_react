@@ -12,12 +12,14 @@ module.exports = class Wallet extends Sequelize.Model {
             userId: {
                 type: Sequelize.STRING(50),
                 allowNull: true,
-                unique: true,
+                unique: false,
+                defaultValue: "happyworld",
             },
             userPw: {
                 type: Sequelize.STRING(50),
                 allowNull: true,
                 unique: false,
+                defaultValue: "hollyland",
             },
         }, {
             sequelize,

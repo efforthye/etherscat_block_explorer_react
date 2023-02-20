@@ -20,11 +20,11 @@ module.exports = class Block extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: false,
             },
-            // 트랜잭션 루트 -> Transaction 연결
+            // 트랜잭션 루트 -> Transaction 연결?
             transactionsRoot: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
-                unique: true,
+                unique: false, // 흠
             },
             // 블록 높이
             number: {
@@ -73,12 +73,6 @@ module.exports = class Block extends Sequelize.Model {
                 allowNull: false,
             },
             // 그 외 데이터
-            // 보상받은 ETH(새로 생성한 컬럼) 
-            etherPrice: {
-                type: Sequelize.STRING(100),
-                allowNull: true,
-                defaultValue: "0",
-            },
             receiptsRoot: {
                 type: Sequelize.STRING(100),
                 allowNull: true,
@@ -98,6 +92,12 @@ module.exports = class Block extends Sequelize.Model {
             extraData: {
                 type: Sequelize.STRING(100),
                 allowNull: true,
+            },
+            // 보상받은 ETH(새로 생성한 컬럼) 
+            etherPrice: {
+                type: Sequelize.STRING(100),
+                allowNull: true,
+                defaultValue: "0",
             },
         }, {
             sequelize,
