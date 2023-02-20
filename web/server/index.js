@@ -75,23 +75,23 @@ db.sequelize.sync({ force: true }).then(async () => {
     console.log("DB 연결됨");
     // Wallet basedata insert
     web3.eth.getAccounts().then(async (accounts) => {
+        // insert Wallet baseData
         for (let i = 0; i < accounts.length; i++) {
             await Wallet.findOrCreate({
                 where: { account: accounts[i] },
             });
         }
-        // Block basedata insert
+        // insert Block baseData
         web3.eth.getBlockNumber().then((num) => {
             for (let i = 1; i < num; i++) {
                 web3.eth.getBlock(i).then(async (data) => {
-                    // Insert Block
+                    // insert Block
                     const createdBlock = await Block.create({
                         hash: data.hash,
                         difficulty: data.difficulty,
                         extraData: data.extraData,
                         gasLimit: data.gasLimit,
                         gasUsed: data.gasUsed,
-                        // hash: data.hash,
                         logsBloom: data.logsBloom,
                         miner: data.miner,
                         mixHash: data.mixHash,
@@ -106,13 +106,13 @@ db.sequelize.sync({ force: true }).then(async () => {
                         totalDifficulty: data.totalDifficulty,
                         transactionsRoot: data.transactionsRoot,
                     });
-                    // Select Wallet
+                    // select Wallet
                     const wallet = await Wallet.findOne({
                         where: {
                             account: data.miner
                         }
                     });
-                    // Block Add Wallet
+                    // add where connected
                     await wallet.addWalletBlocks(createdBlock);
                 });
             }
@@ -121,8 +121,6 @@ db.sequelize.sync({ force: true }).then(async () => {
 }).catch((err) => {
     console.log(err);
 });
-
-
 
 
 // 8080 express server open

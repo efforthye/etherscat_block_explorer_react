@@ -20,24 +20,10 @@ const zeroBlock = (setBlockInfo, number) => {
 const latestBlockArr = (setLatestBlocks) => {
     // getBlockInfo : 해당 번호의 블록 상세 정보를 불러온다.
     getlatestBlocks().then((blockInfo) => {
-        // console.log(blockInfo);
-        // setLatestBlocks(Object.entries(blockInfo));
         setLatestBlocks(blockInfo);
         return blockInfo;
     });
 }
-
-// 블록 채굴 감지 함수
-// block mining console
-websocket.eth.subscribe("newBlockHeaders", (error, result) => {
-    if (!error) {
-        console.log("ㅇㅅㅇ");
-        // latestBlockArr(setLatestBlocks);
-        // 요청 보내기 .. 
-        // 랜더링하게 만들기?
-        // database 저장하기
-    }
-});
 
 
 const MainContainer = () => {
