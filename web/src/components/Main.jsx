@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { faHive } from "@fortawesome/free-brands-svg-icons";
 import BlockIcon from "../images/block2.png"
 
 const MainComponent = ({ blockInfo, latestBlocks }) => {
@@ -45,20 +44,6 @@ const MainComponent = ({ blockInfo, latestBlocks }) => {
                 </SearchBox>
             </SearchBackground>
 
-            {/* 마지막 블록 정보 */}
-            {/* <div>
-                {blockInfo.map((item, index) =>
-                    <div key={index}>{item[0]} : {item[1]}</div>
-                )}
-            </div> */}
-
-            {/* Latest Blocks */}
-            {/* <div>Latest Blocks</div>
-            {console.log(latestBlocks)}
-            {latestBlocks.map((block, index) =>
-                <div key={index}>{block.hash}</div>
-            )} */}
-
             <InfoWrap>
                 <BlocksWrap>
                     <div>Latest Blocks</div>
@@ -79,11 +64,10 @@ const MainComponent = ({ blockInfo, latestBlocks }) => {
                             <div key={`transactions-${index}`}>{block.transactions.length}</div>
                         </div>
                     )}
-
                 </BlocksWrap>
                 <TransactionsWrap>
                     <div>Latest Transactions</div>
-                    {/* <div>{prices[0]}</div> */}
+                    {/* 트랜잭션 띄우기(요청 보내기) */}
                     <div>하이</div>
                 </TransactionsWrap>
             </InfoWrap>
@@ -97,7 +81,7 @@ export default MainComponent;
 
 
 const SearchBackground = styled.div`
-    background-image: url("../images/background5.jpg");
+    /* background-image: url("../images/background5.jpg"); */
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
@@ -113,7 +97,7 @@ const SearchBox = styled.div`
     top: 80px;
     background-color: #fff;
     /* box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%); */
-    box-shadow: 0 2px 5px 1px rgb(64 60 67 / 100%);
+    box-shadow: 0 2px 5px 1px rgb(64 60 67 / 30%);
     border-radius: 24px;
     cursor: text;
     height: 44px;

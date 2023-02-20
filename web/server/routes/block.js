@@ -21,15 +21,22 @@ router.post("/info", async (req, res) => {
 // 마지막 6개 블록
 router.post("/latest", async (req, res) => {
 
-
     // 총 블록 개수
     const newBlockNumber = await web3.eth.getBlockNumber();
-    console.log(newBlockNumber);
+    // const newBlockNumber2 = (await web3.eth.getBlock("latest")).number;
+    // console.log(newBlockNumber);
+    // console.log(newBlockNumber2);
 
     // 최신 6개 블록
     let latestBlocks = [];
-    for (let i = 0; i < 6; i++) {
-        latestBlocks[i] = await web3.eth.getBlock(newBlockNumber - i);
+
+    // 최신 블록이 6개 미만이면 초기 블록만 리턴함
+    if (newBlockNumber < 6) {
+        latestBlocks[0] = await web3.eth.getBlock(0);
+    } else {
+        for (let i = 0; i < 6; i++) {
+            latestBlocks[i] = await web3.eth.getBlock(newBlockNumber - i);
+        }
     }
 
     res.send(latestBlocks);

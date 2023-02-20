@@ -12,6 +12,18 @@ import TestContainer from './containers/Test';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGasPump } from "@fortawesome/free-solid-svg-icons";
 
+// websocket (DB 설정 다하고 Redux에 저장하여 랜더링하기.)
+const Web3 = require("web3");
+const websocket = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8082"));
+websocket.eth.subscribe("newBlockHeaders", (error, result) => {
+  if (!error) {
+    console.log(result);
+    // latestBlockArr(setLatestBlocks);
+    // 랜더링하게 만들기
+    // database 저장하기
+  }
+});
+
 
 // 이더리움 가격 등의 정보 조회 함수
 const ethereumPrice = (setPrices) => {
@@ -20,7 +32,6 @@ const ethereumPrice = (setPrices) => {
     setPrices(prices);
   });
 }
-
 
 function App() {
 
@@ -40,7 +51,7 @@ function App() {
   return (
     <AllWrap className='allWrap'>
 
-      {/* 상단 고정 바 */}
+      {/* fixed top header */}
       <TopPriceBar>
         <PriceBar>
           <Eth>
@@ -55,7 +66,7 @@ function App() {
         </PriceBar>
       </TopPriceBar>
 
-      {/* 헤더 컴포넌트 */}
+      {/* header */}
       <Header className='header'>
         <div>
           <Link to={"/"}>
@@ -73,7 +84,7 @@ function App() {
 
       <Wrap className="wrap">
 
-        {/* link component 출력 */}
+        {/* linked component */}
         <Routes>
           <Route path='/' element={<MainContainer />} />
           <Route path='/block' element={<BlockContainer />} />

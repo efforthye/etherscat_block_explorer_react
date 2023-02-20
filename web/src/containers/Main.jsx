@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { getBlockInfo, getEthereumPrice, getlatestBlocks } from "../api";
 import MainComponent from "../components/Main";
 
+// websocket
+const Web3 = require("web3");
+const websocket = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8082"));
+
 
 // 마지막 블록 요청 함수
 const zeroBlock = (setBlockInfo, number) => {
@@ -23,6 +27,19 @@ const latestBlockArr = (setLatestBlocks) => {
     });
 }
 
+// 블록 채굴 감지 함수
+// block mining console
+websocket.eth.subscribe("newBlockHeaders", (error, result) => {
+    if (!error) {
+        console.log("ㅇㅅㅇ");
+        // latestBlockArr(setLatestBlocks);
+        // 요청 보내기 .. 
+        // 랜더링하게 만들기?
+        // database 저장하기
+    }
+});
+
+
 const MainContainer = () => {
 
     // 블록 정보
@@ -34,6 +51,7 @@ const MainContainer = () => {
         zeroBlock(setBlockInfo, 0);
         latestBlockArr(setLatestBlocks);
     }, []);
+
 
     return <MainComponent blockInfo={blockInfo} latestBlocks={latestBlocks} />
 }

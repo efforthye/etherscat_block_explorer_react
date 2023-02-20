@@ -10,7 +10,6 @@ const cheerio = require("cheerio");
 
 // api/test/new
 router.post("/new", async (req, res) => {
-    console.log(req.body); // 안 찍힘
     try {
         await Test.create(req.body);
         res.send({ isError: false });
@@ -28,21 +27,20 @@ router.post("/crawler", async (req, res) => {
 
     const $ = cheerio.load(resp.data);
     const elements = $('.text-muted a');
-    // const elements2 = $('.text-muted span .text-danger');
     const elements2 = $('.text-muted span span');
 
-    let hi = [];
+    let info = [];
 
     // ethereum price, gas price
     elements.each((idx, el) => {
-        hi.push($(el).text());
+        info.push($(el).text());
     });
     // ethereum price percent
     elements2.each((idx, el) => {
-        hi.push($(el).text());
+        info.push($(el).text());
     });
 
-    res.send(hi);
+    res.send(info);
 
 });
 

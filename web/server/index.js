@@ -16,14 +16,6 @@ const Web3 = require("web3");
 // websocket
 const websocket = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8082"));
 
-// block mining console
-// 화면 랜더링 및 database 저장하기
-websocket.eth.subscribe("newBlockHeaders", (error, result) => {
-    if (!error) {
-        console.log(result);
-    }
-});
-
 dotenv.config();
 const app = express();
 
@@ -61,12 +53,11 @@ app.use(
     })
 );
 
-
 // 8082 websocket server open
-const web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8082"));
-web3.eth.subscribe("newBlockHeaders", (error, result) => {
+websocket.eth.subscribe("newBlockHeaders", (error, result) => {
     if (!error) {
-        console.log(result);
+        // console.log(result);
+        // 어찌 되었든, 감지를 하면 프론트 쪽으로 웹소켓을 보내야 하는듯??...
     }
 });
 
@@ -75,7 +66,7 @@ app.use("/api", routes);
 
 // database
 db.sequelize
-    .sync({ force: false })
+    .sync({ force: true })
     .then(() => {
         console.log("DB 연결됨");
     })
