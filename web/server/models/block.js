@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 module.exports = class Block extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
-            // 블록 해시
+            // 블록 해시 -> Transaction에 가져감
             hash: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
@@ -111,7 +111,20 @@ module.exports = class Block extends Sequelize.Model {
         });
     }
 
-    static assciate(db) {
+    static associate(db) {
+
+        // block 1 : transaction n
+        db.Block.hasMany(db.Transaction, {
+            as: "BlockTransactions", // addBlockTransactions
+            sourceKey: "hash",
+            foreignKey: "blockHash"
+        });
+
+        // wallet 1 : block n
+        db.Block.belongsTo(db.Wallet, {
+            foreignKey: "walletAccount",
+            targetKey: "account",
+        });
 
     }
 }

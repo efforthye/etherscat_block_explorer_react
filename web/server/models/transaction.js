@@ -14,6 +14,7 @@ module.exports = class Transaction extends Sequelize.Model {
             hash: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
+                unique: true, // n : n
             },
             blockHash: {
                 type: Sequelize.STRING(100),
@@ -80,7 +81,23 @@ module.exports = class Transaction extends Sequelize.Model {
         });
     }
 
-    static assciate(db) {
+    static associate(db) {
+
+        // block 1 : transaction n
+        db.Transaction.belongsTo(db.Block, {
+            foreignKey: "blockHash",
+            targetKey: "hash"
+        });
+
+        // wallet n : transaction n
+        db.Transaction.belongsToMany(db.Wallet, {
+            through: "userTransaction",
+            as: "TransactionWallet", // addTransactionWallet
+            foreignKey: "transactionHash",
+            sourceKey: "hash", // unique
+            onDelete: "cascade",
+            // timestamps: true
+        });
 
     }
 }

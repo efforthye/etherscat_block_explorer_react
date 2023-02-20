@@ -5,12 +5,11 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 
 // database
-// const db = { Block, Transaction };
-// const Wallet = require("./wallet.js");
 const Test = require("./test.js");
 const Block = require("./block.js");
 const Transaction = require("./transaction.js");
-const db = { Test, Block, Transaction };
+const Wallet = require("./wallet.js");
+const db = { Test, Block, Transaction, Wallet };
 
 let sequelize = new Sequelize(config.database, config.username, config.password, config);
 
@@ -18,6 +17,7 @@ let sequelize = new Sequelize(config.database, config.username, config.password,
 Test.init(sequelize);
 Block.init(sequelize);
 Transaction.init(sequelize);
+Wallet.init(sequelize);
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
