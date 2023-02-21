@@ -63,7 +63,7 @@ const FooterComponent = ({ moveTop }) => {
 export default FooterComponent;
 
 const AllWrap = styled.div`
-  margin-top: 500px;
+  margin-top: 150px;
   width: 100%;
   background-color: #F8F9FA;
   cursor: default;

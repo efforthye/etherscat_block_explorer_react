@@ -47,7 +47,7 @@ const MainContainer = () => {
     useEffect(() => {
         zeroBlock(setBlockInfo, 0);
         latestBlockArr(setLatestBlocks);
-        // latestTransactionArr(setLatestTransactions);
+        latestTransactionArr(setLatestTransactions);
     }, []);
 
 

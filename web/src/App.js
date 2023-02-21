@@ -2,6 +2,8 @@
 // import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
+// import ApexChart from './components/Chart';
+// import ChartComponent from './components/Chart';
 import BlockContainer from './containers/Block';
 import FooterContainer from './containers/Footer';
 import HeaderContainer from './containers/Header';
@@ -48,7 +50,7 @@ const Wrap = styled.div`
   margin: 0 auto;
   background-color: white;
   border-top: 1px solid rgb(245,245,245);
-  border-bottom: 1px solid rgb(245,245,245);
+  /* border-bottom: 1px solid rgb(245,245,245); */
   /* width: 80%; */
 
   /* height: 700px;  */

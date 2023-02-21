@@ -1,13 +1,23 @@
+const { Transaction } = require("../models");
+
 // api/transaction
 const router = require("express").Router();
 
-// api/transaction/latest : 마지막 트랜잭션 6개
-router.post("/latest", (req, res) => {
+// api/transaction/latest 
+router.post("/latest", async (req, res) => {
     console.log(req.body);
 
-    // 여기
+    // 최신 6개 트랜잭션
+    let allTransactions = [await Transaction.findAll()].reverse();
+    let transactions = [];
 
-    res.end();
+    for (let i = 0; i < 6; i++) {
+        if (allTransactions[i]) {
+            transactions.push(allTransactions[i]);
+        }
+    }
+    console.log(transactions[0]);
+    res.send(transactions[0]);
 });
 
 module.exports = router;

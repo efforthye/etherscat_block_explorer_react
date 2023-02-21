@@ -17,17 +17,13 @@ const HeaderContainer = () => {
     const [prices, setPrices] = useState([]);
     useEffect(() => {
         ethereumPrice(setPrices);
-
-        // 여기에서 DB값 전부 집어넣는 요청을 보내면 될 것 같다.
-        console.log("디비디비딥!");
-
     }, []);
 
-    // 10초마다 가격 불러온다.
+    // 15초마다 가격 불러온다.
     useEffect(() => {
         setTimeout(() => {
             ethereumPrice(setPrices);
-        }, 10000);
+        }, 15000);
     });
 
     return <HeaderComponent prices={prices} />

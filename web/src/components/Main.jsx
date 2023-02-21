@@ -3,9 +3,13 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import BlockIcon from "../images/block2.png"
+import TransactionIcon from "../images/transaction.png"
 import { Link } from "react-router-dom";
+import ApexChart from '../components/Chart.jsx';
 
 const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
+
+    console.log(latestTransactions);
 
     // 검색 
     const [filter, setFilter] = useState("all");
@@ -46,10 +50,26 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
             </SearchBackground>
 
             <PriceWrap className="priceWrap">
-                ETHER PRICE
+
+
+                <div>
+                    <div>ETHER PRICE</div>
+                    <div>ETHER PRICE</div>
+                </div>
+                <div>
+                    <div>Transacions</div>
+                    <div>Transacions</div>
+                </div>
+                <div>
+                    {/* Chart */}
+                    {/* <ApexChart /> */}
+                </div>
+
+
             </PriceWrap>
 
             <InfoWrap>
+                {/* 최신 블록 */}
                 <BNTWrap>
                     <div>Latest Blocks</div>
                     {latestBlocks.map((block, index) =>
@@ -79,18 +99,32 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                         <Link to={`/block`}>VIEW ALL Blocks 👉🏻</Link>
                     </div>
                 </BNTWrap>
+
+                {/* 최신 트랜잭션 */}
                 <BNTWrap>
                     <div>Latest Transactions</div>
-
-                    {/* 트랜잭션 띄우기(요청 보내기) */}
-                    <OneBlock>ㅇㅅㅇ</OneBlock>
-                    <OneBlock>ㅇㅅㅇ</OneBlock>
-                    <OneBlock>ㅇㅅㅇ</OneBlock>
-                    <OneBlock>ㅇㅅㅇ</OneBlock>
-                    <OneBlock>ㅇㅅㅇ</OneBlock>
-                    <OneBlock>ㅇㅅㅇ</OneBlock>
-
-                    <div>하이</div>
+                    {latestTransactions.map((transaction, index) =>
+                        <OneTransaction key={`transaction-${index}`} style={{ margin: "0 20px", borderBottom: "1px solid #E9ECEF" }}>
+                            <IconWrap2 className="iconWrap">
+                                <img src={TransactionIcon} alt={"트랜잭션"}></img>
+                            </IconWrap2>
+                            <div>
+                                <LinkDiv key={`linkk-${index}`}>
+                                    <Link to={`/transaction/${transaction.hash}`}>{transaction.hash}</Link>
+                                </LinkDiv>
+                                <div>{transaction.createdAt}</div>
+                            </div>
+                            <div>
+                                {/* 월렛으로 보냄 ㅇㅇ */}
+                                <div>{`from:${transaction.from}`}</div>
+                                <div>{`to:${transaction.to}`}</div>
+                                {/* <div>to : {transaction.to}</div> */}
+                            </div>
+                        </OneTransaction>
+                    )}
+                    <div>
+                        <Link to={`/transaction`}>VIEW ALL Transactions 👉🏻</Link>
+                    </div>
                 </BNTWrap>
             </InfoWrap>
 
@@ -217,11 +251,24 @@ const OneBlock = styled.div`
     /* 첫번째 자식 빼고 */
     &>div:not(:first-child){
         display: inline-block;
-        margin-left: 12px;
+        margin-left: 25px;
+    }
+`;
+const OneTransaction = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+    /* 첫번째 자식 빼고 */
+    &>div:not(:first-child){
+        display: inline-block;
+        margin-left: 25px;
+        width: 40%;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 `;
 const IconWrap = styled.div`
-    width: 70px;
+    width: 60px;
     height: 60px;
     background-color: #F8F9FA;
     justify-content: center;
@@ -237,10 +284,39 @@ const IconWrap = styled.div`
     -webkit-user-select: none;
     &>svg, &>img{
         position: absolute;
-        height: 60%;
+        height: 30px;
         color: #a6afc0;
-        rotate: 90deg;
-        animation: rotate_image 10s linear infinite;
+        rotate: 120deg;
+        /* animation: rotate_image 10s linear infinite; */
+        transform-origin: 50% 50%;
+    }
+    @keyframes rotate_image{
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+`;
+const IconWrap2 = styled.div`
+    width: 60px;
+    height: 60px;
+    background-color: #F8F9FA;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    position: relative;
+    display: flex;   
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    &>svg, &>img{
+        position: absolute;
+        height: 30px;
+        color: #a6afc0;
+        /* rotate: 120deg; */
+        /* animation: rotate_image 10s linear infinite; */
         transform-origin: 50% 50%;
     }
     @keyframes rotate_image{

@@ -165,20 +165,17 @@ db.sequelize.sync({ force: false }).then(async () => {
                                             // method insert
                                             await block.addBlockTransactions(createdTransaction);
 
-                                        }); // end getTransaction
-                                    } // end transactions for
-                                }); // end getBlock for
-
+                                        }); // getTransaction end
+                                    } // transactions for end
+                                }); // getBlock for end
                             });
-                        }
-                    }).then((count) => {
-                        console.log(count);
+                        }// transaction count end
                     });
                 }// block for end
-            }); // end getBlockNumber
-        }); // end getAccounts
+            }); // getBlockNumber end
+        }); // getAccounts end 
     } else {
-        console.log("있음..");
+        console.log("Data 있음");
     }
 }).catch((err) => {
     console.log(err);

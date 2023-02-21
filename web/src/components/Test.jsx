@@ -11,7 +11,6 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
 
     const [nowAccount, setNowAccount] = useState("0x6636a38d613a7ADaCB5D99298A8F3Ab364355104");
 
-
     // metamask 연결 확인
     if (window.ethereum) {
         const isConnected = window.ethereum.isConnected();
@@ -66,7 +65,6 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
             await getBalance(accounts);
         });
 
-
         // 네트워크 변경 감지 : 0x1
         window.ethereum.on("chainChanged", (chainId) => {
             console.log(chainId);
@@ -74,12 +72,9 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
 
     }
 
-
-
     return (
         <>
             <AppWrap>
-
                 <Wrap>
                     <label>
                         Title : <input type={"text"} onInput={changeFuncs.changeTitle} />
@@ -89,7 +84,6 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
                     </label>
                     <button onClick={upload}>Upload</button>
                 </Wrap>
-
 
                 <Test2Wrap>
                     <button onClick={() => {
@@ -138,7 +132,7 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
 
                     {/* 트랜잭션 관련 */}
                     <button onClick={async () => {
-                        // 블록의 transactionsRoot
+                        // 블록의 transactionsRoot(?)
                         // 거래를 통한 블록의 트랜잭션 해시여야 한다.
                         console.log(await web3.eth.getTransaction("0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"))
                     }}>트랜잭션해시-트랜잭션정보</button>
@@ -156,7 +150,6 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
                 <TestWrap>
                     <button onClick={async () => {
                         // 계정 목록
-                        // const accounts = await web3.eth.getAccounts();
                         alert(nowAccount);
 
                         window.ethereum.request({
@@ -184,14 +177,14 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
                     }}>트랜잭션 해시로 트랜잭션 정보 확인하기</button>
                 </TestWrap>
 
-
+                <MiningWrap>
+                    <button>마이닝워랩 ㅇㅅㅇ</button>
+                </MiningWrap>
             </AppWrap>
-
         </>
     )
 }
 export default TestComponent;
-
 
 const AppWrap = styled.div`
     width: 70%;
@@ -200,7 +193,6 @@ const AppWrap = styled.div`
         margin: 20px 0;
     }
 `;
-
 const Test2Wrap = styled.div`
     background-color: #6633991f;
 `;
@@ -210,7 +202,6 @@ const BlockWrap = styled.div`
 const TestWrap = styled.div`
     background-color: #338a991f;
 `;
-
 const Wrap = styled.div`
     label {
         display: block;
@@ -219,9 +210,8 @@ const Wrap = styled.div`
         }
     }
 `;
-
-const MetamaskWrap = styled.div`
-
+const MiningWrap = styled.div`
+    background-color: #6633991f;
 `;
 
 
