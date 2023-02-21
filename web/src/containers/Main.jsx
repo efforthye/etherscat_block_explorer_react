@@ -4,7 +4,7 @@ import MainComponent from "../components/Main";
 
 // websocket
 const Web3 = require("web3");
-const websocket = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8082"));
+// const websocket = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8082"));
 
 
 // 마지막 블록 요청 함수

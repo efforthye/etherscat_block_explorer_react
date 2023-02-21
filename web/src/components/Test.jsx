@@ -1,7 +1,81 @@
+import { useRef, useState } from "react";
 import styled from "styled-components";
 
 // 컨테이너로부터 받아올 값
 const TestComponent = ({ changeFuncs, upload, web3, request }) => {
+
+    // ref
+    const toRef = useRef(null).current;
+    const ether = useRef(null).current;
+    const sendTransaction = useRef(null).current;
+
+    const [nowAccount, setNowAccount] = useState("0x6636a38d613a7ADaCB5D99298A8F3Ab364355104");
+
+
+    // metamask 연결 확인
+    if (window.ethereum) {
+        const isConnected = window.ethereum.isConnected();
+        console.log(isConnected); //false
+
+        // 잔액 조회 함수
+        const getBalance = async (accounts) => {
+            console.log(accounts[0]);
+
+            // 메타마스크에 RPC 잔액 조회 요청(params : 메타마스크 계정) / HTML에 띄움
+            const balance = await window.ethereum.request({
+                method: "eth_getBalance",
+                params: accounts,
+            });
+            console.log(parseInt(balance) / Math.pow(10, 18) + "ETH");
+        }
+
+        // 네트워크 연결 감지
+        window.ethereum.on("connect", async (connectInfo) => {
+            // 연결 네트워크 확인
+            console.log(connectInfo);
+            console.log(parseInt(connectInfo.chainId));
+
+            // 연결 여부
+            const isConnected = window.ethereum.isConnected();
+            console.log(`connect 후 isConnected : ${isConnected}`); // true
+
+            // 블록 개수 확인
+            const blockNumber = await window.ethereum.request({
+                method: "eth_blockNumber",
+            });
+            console.log(blockNumber);
+
+            try {
+                // 확장 프로그램 계정 조회(중요)
+                const accounts = await window.ethereum.request({
+                    method: "eth_requestAccounts"
+                });
+                // 계정 잔액 조회
+                await getBalance(accounts);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        // 계정 변경 감지
+        window.ethereum.on("accountsChanged", async (accounts) => {
+            setNowAccount(accounts);
+            console.log(nowAccount);
+
+            // 잔액 조회
+            await getBalance(accounts);
+        });
+
+
+        // 네트워크 변경 감지 : 0x1
+        window.ethereum.on("chainChanged", (chainId) => {
+            console.log(chainId);
+        });
+
+    }
+
+
+
     return (
         <>
             <AppWrap>
@@ -80,42 +154,34 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
 
                 {/* Test2 : 잔액 보내기 */}
                 <TestWrap>
-                    {/* <button onClick={async () => {
-                        // 블록의 transactionsRoot (?) 아님!
-                        // 거래를 통한 블록의 트랜잭션 해시여야 한다.
-                        console.log(await web3.eth.getTransaction("0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"))
-                    }}>트랜잭션해시-트랜잭션정보</button> */}
-                    {/* <button onClick={async () => {
+                    <button onClick={async () => {
                         // 계정 목록
-                        const accounts = await web3.eth.getAccounts();
+                        // const accounts = await web3.eth.getAccounts();
+                        alert(nowAccount);
 
-                        // 언락
-                        await request({
-                            data: {
-                                id: 1337,
-                                jsonrpc: "2.0",
-                                method: "personal_unlockAccount",
-                                params: [accounts[0], prompt("비밀번호를 입력해주세요.")],
-                            },
+                        window.ethereum.request({
+                            method: "eth_sendTransaction",
+                            params: [{
+                                from: nowAccount,
+                                to: "0x8F1Db34b3091fa1D9A02Cf7b3E1df567AADF2D65",
+                                value: "0x" + (+1 * Math.pow(10, 18)).toString(16),
+                            }],
+                        }).then(async (result) => {
+                            // 결과물
+                            console.log(result);
+
+                        }).catch((err) => {
+                            console.error(err);
                         });
+                    }}>트랜잭션 보내기</button>
 
-                        // 트랜잭션 보낼 값
-                        const from = (await web3.eth.getAccounts())[0];
-                        const to = (await web3.eth.getAccounts())[1];
-                        const value = web3.utils.toWei("1"); // 1ETH
-
-                        // 트랜잭션 보내기
-                        const transaction = await web3.eth.sendTransaction({ from, to, value });
-                        console.log(transaction);
-
-                        // 트랜잭션 확인
-                        const transaction2 = await web3.eth.getTransaction(transaction.transactionHash);
-                        console.log(transaction2);
-                        // 트랜잭션 해시를 통하여 트랜잭션 확인(우분투에 트랜잭션 결과로 전송된 해시를 가져와 집어넣었다.)
-                        // const transaction3 = await web3.eth.getTransaction("0x864ce3b776b57f15215eaa5a21cc82b940ef44227d879fbb8fa9904f450a4e2c");
-                        // console.log(transaction3);
-
-                    }}>트랜잭션</button> */}
+                    <button onClick={async () => {
+                        const transactionHash = prompt(`해시를 알려줘~ 
+                            0xc6ef2ac9d9940a65d78477c9866b384fc9c93c6f391c7258431c42493afbbb05
+                            0x8f7df2ede8a9f8e87efd5857e972f0afcd9edf6ea3a02f6282163add4aff8db6
+                        `);
+                        console.log(await web3.eth.getTransaction(transactionHash));
+                    }}>트랜잭션 해시로 트랜잭션 정보 확인하기</button>
                 </TestWrap>
 
 
@@ -152,6 +218,10 @@ const Wrap = styled.div`
             margin-left : 0.5rem;
         }
     }
+`;
+
+const MetamaskWrap = styled.div`
+
 `;
 
 
