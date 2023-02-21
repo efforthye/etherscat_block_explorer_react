@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getBlockInfo, getEthereumPrice, getlatestBlocks } from "../api";
+import { getBlockInfo, getLatestBlocks, getLatestTransactions } from "../api";
 import MainComponent from "../components/Main";
 
 // websocket
@@ -19,9 +19,18 @@ const zeroBlock = (setBlockInfo, number) => {
 // 마지막 블록 6개 요청 함수
 const latestBlockArr = (setLatestBlocks) => {
     // getBlockInfo : 해당 번호의 블록 상세 정보를 불러온다.
-    getlatestBlocks().then((blockInfo) => {
+    getLatestBlocks().then((blockInfo) => {
         setLatestBlocks(blockInfo);
         return blockInfo;
+    });
+}
+
+// 마지막 트랜잭션 6개 요청 함수
+const latestTransactionArr = (setLatestTransactions) => {
+    // 해당 트랜잭션의 상세 정보를 불러와 setState한다.
+    getLatestTransactions().then((transactionInfo) => {
+        setLatestTransactions(transactionInfo);
+        return transactionInfo; // void
     });
 }
 
@@ -32,14 +41,17 @@ const MainContainer = () => {
     const [blockInfo, setBlockInfo] = useState([]);
     // 마지막 6개 블록 정보 배열
     const [latestBlocks, setLatestBlocks] = useState([]);
+    // 마지막 6개 트랜잭션 정보 배열
+    const [latestTransactions, setLatestTransactions] = useState([]);
 
     useEffect(() => {
         zeroBlock(setBlockInfo, 0);
         latestBlockArr(setLatestBlocks);
+        // latestTransactionArr(setLatestTransactions);
     }, []);
 
 
-    return <MainComponent blockInfo={blockInfo} latestBlocks={latestBlocks} />
+    return <MainComponent blockInfo={blockInfo} latestBlocks={latestBlocks} latestTransactions={latestTransactions} />
 }
 
 export default MainContainer;

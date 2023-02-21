@@ -1,9 +1,23 @@
 import { useState } from "react";
 import TestComponent from "../components/Test.jsx";
 import { redirect } from "react-router-dom";
+import axios from "axios";
 
 // api
 import { newBoard } from "../api/index.js";
+
+// web3
+import Web3 from "web3";
+const web3 = new Web3("http://localhost:8081");
+
+// geth 요청 기본 정보
+const request = axios.create({
+    method: "POST",
+    baseURL: "http://localhost:8081",
+    headers: {
+        "Content-Type": "application/json"
+    }
+});
 
 const TestContainer = () => {
     const [testData, setTestData] = useState({
@@ -24,7 +38,7 @@ const TestContainer = () => {
         }
     }
 
-    return <TestComponent changeFuncs={{ changeTitle, changeText }} upload={upload} />
+    return <TestComponent changeFuncs={{ changeTitle, changeText }} upload={upload} web3={web3} request={request} />
 }
 
 export default TestContainer;

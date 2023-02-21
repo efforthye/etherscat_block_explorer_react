@@ -33,13 +33,14 @@ function App() {
         {/* linked component */}
         <Routes>
           <Route path='/' element={<MainContainer />} />
+          {/* AllBlockCantainer 생성 */}
           <Route path='/block' element={<BlockContainer />} />
+          <Route path='/block/:blockNumber' element={<BlockContainer />} />
           <Route path='/test' element={<TestContainer />} />
         </Routes>
       </Wrap>
 
       {/* footer */}
-      {/* <Footer className='footer' src='images/footer.png' /> */}
       <FooterContainer />
 
     </AllWrap>
@@ -64,13 +65,4 @@ const Wrap = styled.div`
   /* width: 80%; */
 
   /* height: 700px;  */
-`;
-const Footer = styled.img`
-  width: 100%;
-  -webkit-user-drag: none;
-  -webkit-touch-callout: none;
-  user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -webkit-user-select: none;
 `;

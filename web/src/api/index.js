@@ -25,6 +25,11 @@ export const getBlockInfo = async (blockNumber) => {
 
 
 // 마지막 블록 6개 가져오는 요청 ㅇ
-export const getlatestBlocks = async () => {
+export const getLatestBlocks = async () => {
     return (await request.post("/block/latest")).data;
+}
+
+// 마지막 트랜잭션 6개 가져오는 요청 ㅇ
+export const getLatestTransactions = async () => {
+    return (await request.post("/transaction/latest")).data;
 }
