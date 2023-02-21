@@ -19,6 +19,7 @@ const websocket = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:
 // database for base insert...
 const Wallet = require("./models/wallet.js");
 const Block = require("./models/block.js");
+const { Transaction } = require("./models/index.js");
 
 
 dotenv.config();
@@ -71,53 +72,114 @@ app.use("/api", routes);
 
 
 // database
-db.sequelize.sync({ force: true }).then(async () => {
+db.sequelize.sync({ force: false }).then(async () => {
     console.log("DB 연결됨");
-    // Wallet basedata insert
-    web3.eth.getAccounts().then(async (accounts) => {
-        // insert Wallet baseData
-        for (let i = 0; i < accounts.length; i++) {
-            await Wallet.findOrCreate({
-                where: { account: accounts[i] },
-            });
-        }
-        // insert Block baseData
-        web3.eth.getBlockNumber().then((num) => {
-            for (let i = 1; i < num; i++) {
-                web3.eth.getBlock(i).then(async (data) => {
-                    // insert Block
-                    const createdBlock = await Block.create({
-                        hash: data.hash,
-                        difficulty: data.difficulty,
-                        extraData: data.extraData,
-                        gasLimit: data.gasLimit,
-                        gasUsed: data.gasUsed,
-                        logsBloom: data.logsBloom,
-                        miner: data.miner,
-                        mixHash: data.mixHash,
-                        nonce: data.nonce,
-                        number: data.number,
-                        parentHash: data.parentHash,
-                        receiptsRoot: data.receiptsRoot,
-                        sha3Uncles: data.sha3Uncles,
-                        size: data.size,
-                        stateRoot: data.stateRoot,
-                        timestamp: data.timestamp,
-                        totalDifficulty: data.totalDifficulty,
-                        transactionsRoot: data.transactionsRoot,
-                    });
-                    // select Wallet
-                    const wallet = await Wallet.findOne({
-                        where: {
-                            account: data.miner
-                        }
-                    });
-                    // add where connected
-                    await wallet.addWalletBlocks(createdBlock);
+
+    // wallet이 없으면 database 생성
+    if (!(await Wallet.findOne({ where: { id: 1 } }))) {
+        // Wallet basedata insert
+        web3.eth.getAccounts().then(async (accounts) => {
+            // insert Wallet baseData
+            for (let i = 0; i < accounts.length; i++) {
+                await Wallet.findOrCreate({
+                    where: { account: accounts[i] },
                 });
             }
-        });
-    });
+            // 모든 블록
+            await web3.eth.getBlockNumber().then(async (num) => {
+                for (let i = 1; i < num + 1; i++) {
+                    // insert Block baseData
+                    await web3.eth.getBlock(i).then(async (data) => {
+                        // insert Block
+                        const createdBlock = await Block.create({
+                            hash: data.hash,
+                            difficulty: data.difficulty,
+                            extraData: data.extraData,
+                            gasLimit: data.gasLimit,
+                            gasUsed: data.gasUsed,
+                            logsBloom: data.logsBloom,
+                            miner: data.miner,
+                            mixHash: data.mixHash,
+                            nonce: data.nonce,
+                            number: data.number,
+                            parentHash: data.parentHash,
+                            receiptsRoot: data.receiptsRoot,
+                            sha3Uncles: data.sha3Uncles,
+                            size: data.size,
+                            stateRoot: data.stateRoot,
+                            timestamp: data.timestamp,
+                            totalDifficulty: data.totalDifficulty,
+                            transactionsRoot: data.transactionsRoot,
+                        });
+                        // select Wallet
+                        const wallet = await Wallet.findOne({
+                            where: {
+                                account: data.miner
+                            }
+                        });
+                        // add where connected
+                        await wallet.addWalletBlocks(createdBlock);
+                    });
+
+                    // insert Transaction baseData
+                    // n번째 블록의 트랜잭션 개수 출력
+                    await web3.eth.getBlockTransactionCount(i, true, function (err, count) {
+                        if (count > 0) {
+                            web3.eth.getBlock(i).then(async (blockInfo) => {
+
+                                await web3.eth.getBlock(i).then(async (blockInfo) => {
+                                    const transactions = blockInfo.transactions;
+                                    for (let j = 0; j < transactions.length; j++) {
+                                        // 트랜잭션 해시로 트랜잭션 검색
+                                        await web3.eth.getTransaction(transactions[j]).then(async (transaction) => {
+                                            // Transaction Create
+                                            const createdTransaction = await Transaction.create({
+                                                blockHash: transaction.blockHash,
+                                                blockNumber: transaction.blockNumber,
+                                                from: transaction.from,
+                                                gas: transaction.gas,
+                                                gasPrice: transaction.gasPrice.toString(10),
+                                                hash: transaction.hash,
+                                                input: transaction.input,
+                                                nonce: transaction.nonce,
+                                                to: transaction.to,
+                                                // 한 블록의 트랜잭션 중 몇 번째인지
+                                                transactionIndex: transaction.transactionIndex,
+                                                value: transaction.value.toString(10),
+                                                type: transaction.type,
+                                                chainId: transaction.chainId,
+                                                v: transaction.v,
+                                                r: transaction.r,
+                                                s: transaction.s,
+                                            });
+
+                                            // Block findOne (block(hash))
+                                            console.log(blockInfo.hash);
+                                            const block = await Block.findOne({
+                                                where: {
+                                                    // hash: blockInfo.hash
+                                                    hash: transaction.blockHash
+                                                }
+                                            });
+
+                                            // method insert
+                                            await block.addBlockTransactions(createdTransaction);
+
+                                        }); // end getTransaction
+                                    } // end transactions for
+                                }); // end getBlock for
+
+                            });
+                        }
+                    }).then((count) => {
+                        console.log(count);
+                    });
+                }// block for end
+            }); // end getBlockNumber
+        }); // end getAccounts
+    } else {
+        console.log("있음..");
+    }
 }).catch((err) => {
     console.log(err);
 });
