@@ -45,7 +45,7 @@ router.post("/crawler", async (req, res) => {
     const nowPriceId = (await Price.findOne({
         limit: 1,
         order: [['createdAt', 'DESC']],
-    })).dataValues.id;
+    }))?.dataValues?.id;
 
     // 만약 가격 정보가 100개 이상이면 번호가 낮은 50개 삭제
     // console.log(`nowLength : ${(await Price.findAll()).length}, nowPriceId : ${nowPriceId}`);

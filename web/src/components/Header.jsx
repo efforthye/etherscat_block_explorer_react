@@ -27,7 +27,7 @@ const HeaderComponent = ({ prices }) => {
       <Header className='header'>
         <div>
           <Link to={"/"}>
-            <LogoImg alt="logo" src="images/logo.png" />
+            <LogoImg alt="logo" src="/images/logo.png" />
           </Link>
         </div>
         <RouterLink>

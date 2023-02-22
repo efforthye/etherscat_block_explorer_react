@@ -98,6 +98,5 @@ module.exports = class Transaction extends Sequelize.Model {
             onDelete: "cascade",
             // timestamps: true
         });
-
     }
 }

@@ -8,7 +8,10 @@ import BlockContainer from './containers/Block';
 import FooterContainer from './containers/Footer';
 import HeaderContainer from './containers/Header';
 import MainContainer from './containers/Main';
+import MiningContainer from './containers/Mining';
 import TestContainer from './containers/Test';
+import TransactionContainer from './containers/Transaction';
+import WalletContainer from './containers/Wallet';
 
 function App() {
 
@@ -21,10 +24,25 @@ function App() {
       <Wrap className="wrap">
         {/* linked component */}
         <Routes>
+          {/* 메인 */}
           <Route path='/' element={<MainContainer />} />
-          {/* AllBlockCantainer 생성 */}
+
+          {/* 블록 */}
           <Route path='/block' element={<BlockContainer />} />
           <Route path='/block/:blockNumber' element={<BlockContainer />} />
+
+          {/* 트랜잭션 */}
+          <Route path='/transaction' element={<TransactionContainer />} />
+          <Route path='/transaction/:transactionHash' element={<TransactionContainer />} />
+
+          {/* 지갑 */}
+          <Route path='/wallet' element={<WalletContainer />} />
+          <Route path='/wallet/:account' element={<WalletContainer />} />
+
+          {/* 마이닝 */}
+          <Route path='/mining' element={<MiningContainer />} />
+
+          {/* 테스트 */}
           <Route path='/test' element={<TestContainer />} />
         </Routes>
       </Wrap>

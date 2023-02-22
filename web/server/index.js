@@ -75,8 +75,10 @@ app.use("/api", routes);
 db.sequelize.sync({ force: false }).then(async () => {
     console.log("DB 연결됨");
 
-    // wallet이 없으면 database 생성
+    // wallet 없으면 database 생성
     if (!(await Wallet.findOne({ where: { id: 1 } }))) {
+        // transaction이 없으면 database 생성
+        // if (!(await Transaction.findOne({ where: { id: 1 } }))) {
         // Wallet basedata insert
         web3.eth.getAccounts().then(async (accounts) => {
             // insert Wallet baseData
@@ -88,7 +90,8 @@ db.sequelize.sync({ force: false }).then(async () => {
             // 모든 블록
             await web3.eth.getBlockNumber().then(async (num) => {
                 for (let i = 1; i < num + 1; i++) {
-                    // insert Block baseData
+                    // for (let i = 0; i < num; i++) {
+                    // // insert Block baseData
                     await web3.eth.getBlock(i).then(async (data) => {
                         // insert Block
                         const createdBlock = await Block.create({
@@ -123,8 +126,10 @@ db.sequelize.sync({ force: false }).then(async () => {
 
                     // insert Transaction baseData
                     // n번째 블록의 트랜잭션 개수 출력
+                    console.log(await web3.eth.getBlockTransactionCount(i));
                     await web3.eth.getBlockTransactionCount(i, true, function (err, count) {
                         if (count > 0) {
+                            console.log(web3.eth.getBlock(i));
                             web3.eth.getBlock(i).then(async (blockInfo) => {
 
                                 await web3.eth.getBlock(i).then(async (blockInfo) => {

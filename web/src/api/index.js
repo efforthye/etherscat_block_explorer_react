@@ -20,7 +20,7 @@ export const getEthereumPrice = async () => {
 // 블록 정보 가져오기 (현재블록넘버->블록해시로변경하기)
 // 넘버 없이 보내기
 export const getBlockInfo = async (blockNumber) => {
-    return (await request.post("/block/info", blockNumber)).data;
+    return (await request.post("/block/info", { value: blockNumber })).data;
 }
 
 

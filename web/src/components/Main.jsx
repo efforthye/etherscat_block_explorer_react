@@ -4,20 +4,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import BlockIcon from "../images/block2.png"
 import TransactionIcon from "../images/transaction.png"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ApexChart from '../components/Chart.jsx';
 
 const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
 
-    console.log(latestTransactions);
+    // console.log(latestTransactions);
 
+    // 라우터 이동
+    const navigate = useNavigate();
     // 검색 
-    const [filter, setFilter] = useState("all");
+    const [filter, setFilter] = useState("block");
     const [search, setSearch] = useState("");
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
-            alert(filter);
-            alert(e.target.value);
+            setFilter(filter);
+            setSearch(e.target.value);
+            navigate(`/${filter}/${e.target.value}`);
         }
     }
 
@@ -29,20 +32,23 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                     <SearchSelect onChange={(e) => {
                         setFilter(e.target.value);
                     }}>
-                        <option value="all">All Filters</option>
+                        {/* <option value="all">All Filters</option>
                         <option value="address">Addresses</option>
                         <option value="token">Tokens</option>
                         <option value="tag">Name Tags</option>
                         <option value="label">Labels</option>
-                        <option value="site">Websites</option>
+                        <option value="site">Websites</option> */}
+                        <option value="block">block</option>
+                        <option value="transaction">transaction</option>
+                        <option value="wallet">wallet</option>
+
                     </SearchSelect>
                     <SearchInput placeholder="Search By Address / Txn Hash / Block / Token / Domain Name" onKeyUp={(e) => {
                         setSearch(e.target.value); // input value
                         handleKeyPress(e); // enter
                     }} />
                     <SearchIconDiv onClick={() => {
-                        alert(filter);
-                        alert(search);
+                        navigate(`/${filter}/${search}`);
                     }}>
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                     </SearchIconDiv>
@@ -53,12 +59,24 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
 
 
                 <div>
-                    <div>ETHER PRICE</div>
-                    <div>ETHER PRICE</div>
+
+                    {/* 하나의 아이템 */}
+                    <div>
+                        <div>
+                            <img src={BlockIcon} alt="이더리움" style={{ width: "40px" }} />
+                        </div>
+                        <div>
+                            <div>ETHER PRICE</div>
+                            <div>$1,659.04 (-2.72%)</div>
+                        </div>
+                    </div>
+
+                    {/* <div>MARKET CAP</div> */}
+
                 </div>
                 <div>
                     <div>Transacions</div>
-                    <div>Transacions</div>
+                    <div>LAST FINALIZED BLOCK</div>
                 </div>
                 <div>
                     {/* Chart */}
@@ -89,7 +107,11 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
 
                             <div>
                                 {/* 해당 채굴자 Wallet 상세 정보로 이동 */}
-                                <div key={`miner-${index}`}>{block.miner}</div>
+                                <div key={`miner-${index}`}>
+                                    <LinkDiv>
+                                        <Link to={`/wallet/${block.miner}`}>{block.miner}</Link>
+                                    </LinkDiv>
+                                </div>
                                 {/* 해당 트랜잭션 상세 정보로 이동 */}
                                 <div key={`transactions-${index}`}>{block.transactions.length} txns in n secs</div>
                             </div>
@@ -109,16 +131,27 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                                 <img src={TransactionIcon} alt={"트랜잭션"}></img>
                             </IconWrap2>
                             <div>
-                                <LinkDiv key={`linkk-${index}`}>
+                                <LinkDiv key={`transactionLink-${index}`}>
                                     <Link to={`/transaction/${transaction.hash}`}>{transaction.hash}</Link>
                                 </LinkDiv>
-                                <div>{transaction.createdAt}</div>
+                                <div style={{ height: "20px" }}>{transaction.createdAt}</div>
                             </div>
                             <div>
-                                {/* 월렛으로 보냄 ㅇㅇ */}
-                                <div>{`from:${transaction.from}`}</div>
-                                <div>{`to:${transaction.to}`}</div>
-                                {/* <div>to : {transaction.to}</div> */}
+                                {/* 트랜잭션 지갑 */}
+                                <div>
+                                    <LinkDiv key={`walletFrom-${index}`}>
+                                        from:<Link to={`/wallet/${transaction.from}`}>
+                                            {`${transaction.from}`}
+                                        </Link>
+                                    </LinkDiv>
+                                </div>
+                                <div>
+                                    <LinkDiv key={`walletTo-${index}`}>
+                                        to:<Link to={`/wallet/${transaction.to}`}>
+                                            {`${transaction.to}`}
+                                        </Link>
+                                    </LinkDiv>
+                                </div>
                             </div>
                         </OneTransaction>
                     )}

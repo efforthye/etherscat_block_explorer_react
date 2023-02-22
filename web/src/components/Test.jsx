@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 // 컨테이너로부터 받아올 값
@@ -9,7 +9,17 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
     const ether = useRef(null).current;
     const sendTransaction = useRef(null).current;
 
-    const [nowAccount, setNowAccount] = useState("0x6636a38d613a7ADaCB5D99298A8F3Ab364355104");
+
+    const [nowAccount, setNowAccount] = useState();
+
+    useEffect(() => {
+        window.ethereum.request({
+            method: "eth_requestAccounts"
+        }).then((data) => {
+            setNowAccount(data);
+        });
+    }, []);
+
 
     // metamask 연결 확인
     if (window.ethereum) {
@@ -49,6 +59,7 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
                 const accounts = await window.ethereum.request({
                     method: "eth_requestAccounts"
                 });
+                alert(accounts);
                 // 계정 잔액 조회
                 await getBalance(accounts);
             } catch (error) {
@@ -150,11 +161,13 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
                 <TestWrap>
                     <button onClick={async () => {
                         // 계정 목록
-                        alert(nowAccount);
+                        alert("현재 계정 : " + nowAccount);
+                        alert("0x8F1Db34b3091fa1D9A02Cf7b3E1df567AADF2D65" + " 에게 보냅니다.")
 
                         window.ethereum.request({
                             method: "eth_sendTransaction",
                             params: [{
+                                // 0번 놈이 나에게 보내는 걸로 하자 ㅇ
                                 from: nowAccount,
                                 to: "0x8F1Db34b3091fa1D9A02Cf7b3E1df567AADF2D65",
                                 value: "0x" + (+1 * Math.pow(10, 18)).toString(16),
