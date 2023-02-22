@@ -17,19 +17,26 @@ export const getEthereumPrice = async () => {
 }
 
 
-// 블록 정보 가져오기 (현재블록넘버->블록해시로변경하기)
-// 넘버 없이 보내기
-export const getBlockInfo = async (blockNumber) => {
-    return (await request.post("/block/info", { value: blockNumber })).data;
+// 블록 정보 요청 (블록넘버or블록해시)
+export const getBlockInfo = async (numberOrHash) => {
+    // value를 data로 바꾸기
+    return (await request.post("/block/info", { value: numberOrHash })).data;
+}
+
+// 트랜잭션 정보 요청 (해시)
+export const getTransactionInfo = async (txHash) => {
+    console.log(txHash);
+    return (await request.post("/transaction/info", { hash: txHash })).data;
 }
 
 
-// 마지막 블록 6개 가져오는 요청 ㅇ
+// 마지막 블록 6개 가져오는 요청 
 export const getLatestBlocks = async () => {
     return (await request.post("/block/latest")).data;
 }
 
-// 마지막 트랜잭션 6개 가져오는 요청 ㅇ
+// 마지막 트랜잭션 6개 가져오는 요청 
 export const getLatestTransactions = async () => {
     return (await request.post("/transaction/latest")).data;
 }
+

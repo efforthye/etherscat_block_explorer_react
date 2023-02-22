@@ -16,4 +16,17 @@ router.post("/latest", async (req, res) => {
     res.send(transactions);
 });
 
+
+// 트랜잭션 상세 정보
+router.post("/info", async (req, res) => {
+    const hash = req.body.hash;
+
+    const txInfo = (await Transaction.findOne({
+        hash: hash
+    })).dataValues;
+
+    res.send(txInfo);
+});
+
+
 module.exports = router;
