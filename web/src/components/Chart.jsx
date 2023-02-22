@@ -3,8 +3,10 @@ import styled from "styled-components";
 
 const ChartComponent = () => {
     return (
+        // <ChartWrap>
         <ApexCharts
             type="line"
+            height={"180px"}
             series={[
                 {
                     name: 'Sales',
@@ -13,7 +15,7 @@ const ChartComponent = () => {
             ]}
             options={{
                 chart: {
-                    height: 350,
+                    // height: 350,
                     type: 'line',
                     // 툴바
                     toolbar: { show: true },
@@ -31,7 +33,7 @@ const ChartComponent = () => {
                 },
                 title: {
                     // 차트 제목
-                    text: 'Price Chart',
+                    text: 'Ethereum Price Chart',
                     // 제목 위치
                     align: 'left',
                     // 제목 스타일
@@ -62,7 +64,7 @@ const ChartComponent = () => {
                     min: -10,
                     max: 40,
                     // 세로축 값 안보이게
-                    // show: false,
+                    show: false,
                 },
                 xaxis: {
                     // 가로선 설정
@@ -87,3 +89,9 @@ const ChartComponent = () => {
 };
 
 export default ChartComponent;
+
+const ChartWrap = styled.div`
+    /* background-color: rebeccapurple; */
+    /* width: 500px;
+    height: 500px; */
+`;

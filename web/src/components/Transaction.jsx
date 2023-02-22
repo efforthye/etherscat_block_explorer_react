@@ -3,6 +3,15 @@ import styled from "styled-components";
 
 const TransactionComponent = ({ txInfo }) => {
 
+    // 상위 파람스가 transaction이면 어쩌구저쩌구 ㅇㅇ
+    // isAll
+
+    // if (!txInfo) {
+    //     alert("전체");
+    // } else {
+    //     alert("있다는데.?");
+    // }
+
     return (
         <>
             <AllWrap>
@@ -30,17 +39,17 @@ const TransactionComponent = ({ txInfo }) => {
                 <div>v : {txInfo?.v}</div>
                 <div>
                     <LinkDiv>
-                        to:
-                        <Link to={`/wallet/${txInfo.to}`}>
-                            {txInfo?.to}
+                        from:
+                        <Link to={`/wallet/${txInfo.from}`}>
+                            {txInfo?.from}
                         </Link>
                     </LinkDiv>
                 </div>
                 <div>
                     <LinkDiv>
-                        from:
-                        <Link to={`/wallet/${txInfo.from}`}>
-                            {txInfo?.from}
+                        to:
+                        <Link to={`/wallet/${txInfo.to}`}>
+                            {txInfo?.to}
                         </Link>
                     </LinkDiv>
                 </div>

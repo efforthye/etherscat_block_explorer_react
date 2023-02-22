@@ -3,7 +3,12 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import BlockIcon from "../images/block2.png"
+import EthereumIcon from "../images/ethereum.png"
 import TransactionIcon from "../images/transaction.png"
+import Transaction2Icon from "../images/transaction2.png"
+import Transaction3Icon from "../images/transaction3.png"
+import NonIcon from "../images/nog.png"
+import SoIcon from "../images/2204.png"
 import { Link, useNavigate } from "react-router-dom";
 import ApexChart from '../components/Chart.jsx';
 
@@ -32,12 +37,6 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                     <SearchSelect onChange={(e) => {
                         setFilter(e.target.value);
                     }}>
-                        {/* <option value="all">All Filters</option>
-                        <option value="address">Addresses</option>
-                        <option value="token">Tokens</option>
-                        <option value="tag">Name Tags</option>
-                        <option value="label">Labels</option>
-                        <option value="site">Websites</option> */}
                         <option value="block">block</option>
                         <option value="transaction">transaction</option>
                         <option value="wallet">wallet</option>
@@ -55,36 +54,57 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                 </SearchBox>
             </SearchBackground>
 
-            <PriceWrap className="priceWrap">
-
-
-                <div>
-
-                    {/* 하나의 아이템 */}
-                    <div>
-                        <div>
-                            <img src={BlockIcon} alt="이더리움" style={{ width: "40px" }} />
-                        </div>
+            <ALLPriceWrap className="priceWrap">
+                <ThreeWrap className="threeWrap">
+                    {/* 하나의 아이템 ㅇ */}
+                    <PriceWrap className="priceWrap">
+                        <PriceLeft className="priceLeft">
+                            <img src={EthereumIcon} alt="이더리움" />
+                        </PriceLeft>
                         <div>
                             <div>ETHER PRICE</div>
                             <div>$1,659.04 (-2.72%)</div>
                         </div>
-                    </div>
+                    </PriceWrap>
 
-                    {/* <div>MARKET CAP</div> */}
+                    {/* 하나의 아이템 ㅇ */}
+                    <PriceWrap>
+                        <PriceLeft className="priceLeft">
+                            <img src={NonIcon} alt="" />
+                        </PriceLeft>
+                        <div>
+                            <div>MARKET CAP</div>
+                            <div>$197,960,235,163.00</div>
+                        </div>
+                    </PriceWrap>
+                </ThreeWrap>
 
-                </div>
-                <div>
-                    <div>Transacions</div>
-                    <div>LAST FINALIZED BLOCK</div>
-                </div>
-                <div>
+                <ThreeWrap>
+                    <PriceWrap>
+                        <PriceLeft className="priceLeft">
+                            <img src={Transaction3Icon} alt="트랜잭션" />
+                        </PriceLeft>
+                        <div>
+                            <div>Transacions</div>
+                            <div>1,881.41 M (11.8 TPS)</div>
+                        </div>
+                    </PriceWrap>
+                    <PriceWrap>
+                        <PriceLeft className="priceLeft">
+                            <img src={SoIcon} alt="마지막 블록" />
+                        </PriceLeft>
+                        <div>
+                            <div>LAST FINALIZED BLOCK</div>
+                            <div>16682428</div>
+                        </div>
+                    </PriceWrap>
+                </ThreeWrap>
+
+                <ThreeWrap style={{ position: "relative" }}>
                     {/* Chart */}
-                    {/* <ApexChart /> */}
-                </div>
-
-
-            </PriceWrap>
+                    <ApexChart />
+                </ThreeWrap>
+            </ALLPriceWrap>
 
             <InfoWrap>
                 {/* 최신 블록 */}
@@ -118,7 +138,7 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                         </OneBlock>
                     )}
                     <div>
-                        <Link to={`/block`}>VIEW ALL Blocks 👉🏻</Link>
+                        <Link to={`/block`}>VIEW ALL Blocks <span style={{ fontSize: "18px" }}>&rarr;</span></Link>
                     </div>
                 </BNTWrap>
 
@@ -156,7 +176,7 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                         </OneTransaction>
                     )}
                     <div>
-                        <Link to={`/transaction`}>VIEW ALL Transactions 👉🏻</Link>
+                        <Link to={`/transaction`}>VIEW ALL Transactions <span style={{ fontSize: "18px" }}>&rarr;</span></Link>
                     </div>
                 </BNTWrap>
             </InfoWrap>
@@ -213,30 +233,12 @@ const SearchIconDiv = styled.div`
     cursor: pointer;
 `;
 
-const PriceWrap = styled.div`
-    background-color: white;
-    height: 180px;
-    left: 15%;
-    top: 324px;
-    width: 70%;
-    display: flex;
-    justify-content: space-between;
-    margin: 60px auto;
-    border-radius: 10px;
-    position: absolute;
-    --bs-card-box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
-    box-shadow: var(--bs-card-box-shadow);
-    --bs-card-border-color: var(--bs-border-color);
-    border: var(--bs-card-border-width) solid var(--bs-card-border-color);
-    border: 1px solid #e9ecef;
-`;
-
 const InfoWrap = styled.div`
     width: 70%;
     display: flex;
     justify-content: space-between;
-    margin: 60px auto;
-    margin-top: 160px;
+    margin: 0 auto;
+    margin-top: 180px;
 
     &>div{
         display: inline-block;
@@ -362,5 +364,61 @@ const LinkDiv = styled.div`
     &>a{
         color: #0784c3;
         text-decoration: none;
+    }
+`;
+
+
+
+const ALLPriceWrap = styled.div`
+    background-color: white;
+    height: 180px;
+    left: 15%;
+    top: 324px;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    margin: 60px auto;
+    border-radius: 10px;
+    position: absolute;
+    --bs-card-box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
+    box-shadow: var(--bs-card-box-shadow);
+    --bs-card-border-color: var(--bs-border-color);
+    border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+    border: 1px solid #e9ecef;
+    // 1, 2
+    &>div:not(:last-child){
+        // 각각
+        &>div{
+            height: 50%;
+            --bs-card-box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
+            box-shadow: var(--bs-card-box-shadow);
+        }
+    }
+    &>div:last-child{
+        --bs-card-box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
+        box-shadow: var(--bs-card-box-shadow);
+    }
+    &>div>div{
+        display: flex;
+        align-items: center;
+        &>div:first-child{
+            width: 10%;
+        }
+    }
+
+`;
+
+// 가격
+const ThreeWrap = styled.div`
+    width: 33%;
+`;
+const PriceWrap = styled.div`
+    
+`;
+const PriceLeft = styled.div`
+    width: 10%;
+    margin: 0 20px;
+    &>img{
+        width: 30px;
     }
 `;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import EthereumIcon from "../images/ethereum2.png"
 
 const FooterComponent = ({ moveTop }) => {
     return (
@@ -7,16 +8,19 @@ const FooterComponent = ({ moveTop }) => {
                 <ContentWrap className="contentWrap">
                     <FooterTop className="footerTop">
                         <div>
-                            <div>✨</div>
-                            <div>💌</div>
-                            <div>🎠</div>
-                            <div>💠</div>
+                            <div>🔗</div>
+                            <div>💻</div>
+                            <div>🔌</div>
+                            <div>📷</div>
                         </div>
-                        <div onClick={moveTop}>⏫ Back to Top</div>
+                        <div onClick={moveTop}><span style={{ fontSize: "18px" }}>&uarr; </span>Back to Top</div>
                     </FooterTop>
                     <FooterContent className="footerContent">
                         <ContentsDiv>
-                            <span>💲 Powered by Ethereum</span>
+                            {/* <span>💲 Powered by Ethereum</span> */}
+                            <span style={{ display: "flex", alignItems: "center" }}>
+                                <img src={EthereumIcon} alt={"트랜잭션"} style={{ width: "30px" }} />
+                                Powered by Ethereum</span>
                             <span>
                                 Etherscat is a Block Explorer and Analytics Platform for Ethereum,
                                 a decentralized smart contracts platform.
