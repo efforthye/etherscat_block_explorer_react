@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Loading from "../components/Loding";
+import { timestampFunc } from "../util";
 
 const AllBlockComponent = ({ blocks, allPageNum, setPage, page, loading }) => {
 
@@ -35,29 +36,37 @@ const AllBlockComponent = ({ blocks, allPageNum, setPage, page, loading }) => {
                 <Title>Blocks</Title>
 
                 {/* 테이블로 바꾸기 */}
-                <BlocksWrap>
-                    <InfoWrap>
-                        {/* <Information>
-                            <span>ㅇㅅㅇ</span>
-                            <span>ㅇㅅㅇ</span>
-                            <span>ㅇㅅㅇ</span>
-                        </Information> */}
-                    </InfoWrap>
-                    {/* 하나하나의 블록 정보 */}
+                <table border="0">
+                    <th>Block</th>
+                    <th>Age</th>
+                    <th>Fee Recipient</th> {/* 마이닝 한사람*/}
+                    <th>Gas Used</th>
+                    <th>Gas Limit</th>
+
+                    {/* for문 */}
                     {blocks?.map((block, index) => (
-                        <BlockWrap key={`block-${index}`}>
-                            <BlockInfo>
-                                <span>{block?.number}</span>
-                                <span>{block?.hash}</span>
+                        <Tr key={`block-${index}`}>
+                            <Td style={{ width: "5%", height: "60px" }}>
+                                <LinkDiv2>
+                                    <Link to={`/block/${block?.number}`}>
+                                        {block?.number}
+                                    </Link>
+                                </LinkDiv2>
+                            </Td>
+                            <Td style={{ width: "20%" }}>{timestampFunc(block?.timestamp).text} 전</Td> {/* 시간 변환 */}
+                            <Td style={{ width: "30%" }}>
                                 <LinkDiv2>
                                     <Link to={`/wallet/${block?.miner}`}>
                                         {block?.miner}
                                     </Link>
                                 </LinkDiv2>
-                            </BlockInfo>
-                        </BlockWrap>
+                            </Td>
+                            <Td style={{ width: "10%" }}>{block?.gasUsed}</Td>
+                            <Td style={{ width: "10%" }}>{block?.gasLimit}</Td>
+                        </Tr>
                     ))}
-                </BlocksWrap>
+                </table>
+
                 {/* 페이지 출력하는 함수 : 이전, 다음 만들기 */}
                 <PageWrap>
                     <LinkDiv>
@@ -123,6 +132,7 @@ const Title = styled.div`
         color: #6C757D;
         font-weight: 500;
     }
+    margin-bottom: 16px;
 `;
 const BlocksWrap = styled.div`
 
@@ -168,3 +178,11 @@ const PageWrap = styled.div`
     padding: 10px 0;
     margin-top: 20px;
 `;
+
+const Tr = styled.tr`
+    margin: 10px 0;
+`;
+const Td = styled.td`
+    text-align: center;
+`;
+

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { timestampFunc } from "../util";
 import Loading from "./Loding";
 
 const AllTransactionComponent = ({ transactions, allPageNum, setPage, page, loading }) => {
@@ -16,13 +17,21 @@ const AllTransactionComponent = ({ transactions, allPageNum, setPage, page, load
         return pageArr;
     }
 
-    // 스크롤을 올리는 함수
+    // 스크롤을 올리는 함수 -> utils로 빼기
     const moveTop = () => {
         window.scrollTo({
             top: 100,
             behavior: "smooth",
         });
     };
+
+    // 해시를 잘라 단축하는 함수 -> utils로 빼기
+    const sliceHash = (hash) => {
+        const left = hash.slice(0, 6);
+        const right = hash.slice(-6);
+        const newHash = `${left}...${right}`;
+        return newHash;
+    }
 
 
     return (
@@ -34,39 +43,55 @@ const AllTransactionComponent = ({ transactions, allPageNum, setPage, page, load
                 {/* 현재 트랜잭션 넘버 구해서 올리기 */}
                 <Title>Transactions</Title>
 
-                {/* 테이블로 바꾸기 */}
-                <BlocksWrap>
-                    <InfoWrap>
-                        {/* <Information>
-                            <span>ㅇㅅㅇ</span>
-                            <span>ㅇㅅㅇ</span>
-                            <span>ㅇㅅㅇ</span>
-                        </Information> */}
-                    </InfoWrap>
-                    {/* 하나하나의 트랜잭션 정보 : 수정 */}
+
+                <table border="0">
+                    <th>Txn Hash</th>
+                    <th>Block</th>
+                    <th>Age</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Value</th>
+                    {/* <th>Txn Fee</th> */}
+
+                    {/* for문 */}
                     {transactions?.map((transaction, index) => (
-                        <BlockWrap key={`block-${index}`}>
-                            <BlockInfo>
-                                <span>{transaction?.value}</span>
+                        <Tr key={`transaction-${index}`}>
+                            <Td style={{ width: "16%", height: "60px" }}>
                                 <LinkDiv2>
-                                    <Link to={`/block/${transaction?.blockNumber}`}>
+                                    <Link to={`/transaction/${transaction?.hash}`}>
+                                        {sliceHash(transaction?.hash)}
+                                    </Link>
+                                </LinkDiv2>
+                            </Td>
+                            <Td style={{ width: "20%", height: "60px" }}>
+                                <LinkDiv2>
+                                    <Link to={`/transaction/${transaction?.blockNumber}`}>
                                         {transaction?.blockNumber}
                                     </Link>
                                 </LinkDiv2>
+                            </Td>
+                            <Td style={{ width: "20%" }}>{timestampFunc(transaction?.Block.timestamp).text} 전</Td>
+
+                            <Td style={{ width: "20%", height: "60px" }}>
                                 <LinkDiv2>
                                     <Link to={`/wallet/${transaction?.from}`}>
-                                        from:{transaction?.from}
+                                        {sliceHash(transaction?.from)}
                                     </Link>
                                 </LinkDiv2>
+                            </Td>
+                            <Td style={{ width: "20%", height: "60px" }}>
                                 <LinkDiv2>
                                     <Link to={`/wallet/${transaction?.to}`}>
-                                        to:{transaction?.to}
+                                        {sliceHash(transaction?.to)}
                                     </Link>
                                 </LinkDiv2>
-                            </BlockInfo>
-                        </BlockWrap>
+                            </Td>
+                            <Td style={{ width: "20%" }}>{(transaction?.value) / Math.pow(10, 18)}ETH</Td>
+                        </Tr>
                     ))}
-                </BlocksWrap>
+                </table>
+
+
                 {/* 페이지 출력하는 함수 : 이전, 다음 만들기 */}
                 <PageWrap>
                     <LinkDiv>
@@ -131,6 +156,7 @@ const Title = styled.div`
         color: #6C757D;
         font-weight: 500;
     }
+    margin-bottom: 16px;
 `;
 const BlocksWrap = styled.div`
 
@@ -176,3 +202,42 @@ const PageWrap = styled.div`
     padding: 10px 0;
     margin-top: 20px;
 `;
+const Tr = styled.tr`
+    margin: 10px 0;
+`;
+const Td = styled.td`
+    text-align: center;
+    /* overflow: hidden;
+    text-overflow: ellipsis; */
+`;
+
+
+
+
+
+
+                // {/* 테이블로 바꾸기 */}
+                // {/* <BlocksWrap>
+                //     {transactions?.map((transaction, index) => (
+                //         <BlockWrap key={`block-${index}`}>
+                //             <BlockInfo>
+                //                 <span>{transaction?.value}</span>
+                //                 <LinkDiv2>
+                //                     <Link to={`/block/${transaction?.blockNumber}`}>
+                //                         {transaction?.blockNumber}
+                //                     </Link>
+                //                 </LinkDiv2>
+                //                 <LinkDiv2>
+                //                     <Link to={`/wallet/${transaction?.from}`}>
+                //                         from:{transaction?.from}
+                //                     </Link>
+                //                 </LinkDiv2>
+                //                 <LinkDiv2>
+                //                     <Link to={`/wallet/${transaction?.to}`}>
+                //                         to:{transaction?.to}
+                //                     </Link>
+                //                 </LinkDiv2>
+                //             </BlockInfo>
+                //         </BlockWrap>
+                //     ))}
+                // </BlocksWrap> */}
