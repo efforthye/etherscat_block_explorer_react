@@ -125,7 +125,7 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
                         console.log(await web3.eth.getGasPrice() + " Wei");
                         // console.log(+(await web3.eth.getGasPrice()) / Math.pow(10, 18) + "ETH");
                         // console.log(+(await web3.eth.getGasPrice()) / 1000000000000000000);
-                        console.log("가스 가격 ETH로 변환하기")
+                        console.log("가스 가격 ETH로 변환하기");
                     }}>가스 가격</button>
 
                 </Test2Wrap>
@@ -142,11 +142,11 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
                     {/* https://web3js-kr.readthedocs.io/ko/latest/web3-eth-accounts.html#eth-accounts */}
 
                     {/* 트랜잭션 관련 */}
-                    <button onClick={async () => {
+                    {/* <button onClick={async () => {
                         // 블록의 transactionsRoot(?)
                         // 거래를 통한 블록의 트랜잭션 해시여야 한다.
                         console.log(await web3.eth.getTransaction("0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"))
-                    }}>트랜잭션해시-트랜잭션정보</button>
+                    }}>트랜잭션해시-트랜잭션정보</button> */}
 
                 </TestWrap>
 
@@ -160,16 +160,22 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
                 {/* Test2 : 잔액 보내기 */}
                 <TestWrap>
                     <button onClick={async () => {
+
+                        const accounts = await web3.eth.getAccounts();
+                        // const three = (await web3.eth.getAccounts())[3];
+                        const to = (await web3.eth.getAccounts())[(await web3.eth.getAccounts()).length - 1];
+                        console.log(accounts);
+                        console.log(to);
+
                         // 계정 목록
                         alert("현재 계정 : " + nowAccount);
-                        alert("0x8F1Db34b3091fa1D9A02Cf7b3E1df567AADF2D65" + " 에게 보냅니다.")
+                        alert(`${to}` + " 에게 보냅니다.")
 
                         window.ethereum.request({
                             method: "eth_sendTransaction",
                             params: [{
-                                // 0번 놈이 나에게 보내는 걸로 하자 ㅇ
-                                from: nowAccount,
-                                to: "0x8F1Db34b3091fa1D9A02Cf7b3E1df567AADF2D65",
+                                from: nowAccount.toString(),
+                                to: to.toString(),
                                 value: "0x" + (+1 * Math.pow(10, 18)).toString(16),
                             }],
                         }).then(async (result) => {
@@ -183,15 +189,14 @@ const TestComponent = ({ changeFuncs, upload, web3, request }) => {
 
                     <button onClick={async () => {
                         const transactionHash = prompt(`해시를 알려줘~ 
-                            0xc6ef2ac9d9940a65d78477c9866b384fc9c93c6f391c7258431c42493afbbb05
-                            0x8f7df2ede8a9f8e87efd5857e972f0afcd9edf6ea3a02f6282163add4aff8db6
+                            ex) 0x8f7df2ede8a9f8e87efd5857e972f0afcd9edf6ea3a02f6282163add4aff8db6
                         `);
                         console.log(await web3.eth.getTransaction(transactionHash));
                     }}>트랜잭션 해시로 트랜잭션 정보 확인하기</button>
                 </TestWrap>
 
                 <MiningWrap>
-                    <button>마이닝워랩 ㅇㅅㅇ</button>
+                    {/* <button>마이닝워랩 ㅇㅅㅇ</button> */}
                 </MiningWrap>
             </AppWrap>
         </>

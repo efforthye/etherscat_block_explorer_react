@@ -47,8 +47,15 @@ export const getTransactionInfo = async (txHash) => {
 export const getLatestTransactions = async () => {
     return (await request.post("/transaction/latest")).data;
 }
-// 해당 유저의 모든 트랜잭션을 가져오는 요청
+// 해당 유저의 모든 트랜잭션을 가져오는 요청 (계정)
 export const getAccountTransactions = async (account) => {
     return (await request.post("/transaction/account", { account: account })).data;
 }
-
+// 모든 트랜잭션 개수 요청
+export const getAllTransactionCount = async () => {
+    return (await request.post("/transaction/allCount")).data;
+}
+// 해당 페이지의 트랜잭션들 요청
+export const getAllTransaction = async (page) => {
+    return (await request.post("/transaction/allTransaction", { page: page })).data;
+}

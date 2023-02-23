@@ -44,7 +44,32 @@ router.post("/account", async (req, res) => {
     let result = { from: [from], to: [to] };
     res.send(result);
 
-    // res.end();
+});
+
+// 모든 트랜잭션 개수
+router.post("/allCount", async (req, res) => {
+
+    // id를 desc로 정렬하여 limit 한개
+    const count = (await Transaction.findOne({
+        order: [["id", "DESC"]],
+    })).id;
+
+    res.send(`${count}`);
+});
+
+// 해당 페이지의 모든 트랜잭션
+router.post("/allTransaction", async (req, res) => {
+    const page = req.body.page;
+
+    // 10개의 최신 트랜잭션
+    const transactions = await Transaction.findAll({
+        include: Block,
+        limit: 10,
+        offset: (10 * page) - 10,
+        order: [["updatedAt", "DESC"]]
+    });
+
+    res.send(transactions);
 });
 
 

@@ -90,7 +90,7 @@ router.post("/allBlock", async (req, res) => {
     // 20개의 최신 블록
     const blocks = await Block.findAll({
         limit: 20,
-        offset: 20 * page,
+        offset: (20 * page) - 20,
         order: [["number", "DESC"]]
     });
 

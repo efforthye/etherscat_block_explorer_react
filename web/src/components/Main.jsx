@@ -12,8 +12,9 @@ import SoIcon from "../images/2204.png"
 import { Link, useNavigate } from "react-router-dom";
 import ApexChart from '../components/Chart.jsx';
 import { timestampFunc } from "../util";
+import Loading from "./Loding";
 
-const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
+const MainComponent = ({ blockInfo, latestBlocks, latestTransactions, loading }) => {
 
     // console.log(latestTransactions);
 
@@ -111,6 +112,7 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                 {/* 최신 블록 */}
                 <BNTWrap>
                     <div>Latest Blocks</div>
+                    {loading ? <Loading /> : null}
                     {latestBlocks.map((block, index) =>
                         <OneBlock key={index} style={{ margin: "0 20px", borderBottom: "1px solid #E9ECEF" }}>
                             <IconWrap className="iconWrap">
@@ -148,6 +150,7 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                 {/* 최신 트랜잭션 */}
                 <BNTWrap>
                     <div>Latest Transactions</div>
+                    {loading ? <Loading /> : null}
                     {latestTransactions.map((transaction, index) =>
                         <OneTransaction key={`transaction-${index}`} style={{ margin: "0 20px", borderBottom: "1px solid #E9ECEF" }}>
                             <IconWrap2 className="iconWrap">
