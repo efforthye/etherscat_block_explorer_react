@@ -7,6 +7,9 @@ const AllTransactionComponent = ({ transactions, allPageNum, setPage, page, load
 
     // console.log(transactions);
     // console.log(transactions[0]?.Block?.timestamp);
+    console.log(transactions);
+    console.log(allPageNum); // 0
+    console.log(page);
 
     // 페이지 배열
     const pagenation = (allPageNum) => {

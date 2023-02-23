@@ -5,10 +5,10 @@ import AllTransactionComponent from "../components/AllTransaction";
 
 
 // 모든 트랜잭션 개수 요청 함수(setState)
-const getCount = (setTxCount) => {
+const getCount = (setTransactionCount) => {
     // api 요청 및 라우터 처리
     getAllTransactionCount().then((count) => {
-        setTxCount(+count);
+        setTransactionCount(+count);
     });
 }
 
@@ -28,8 +28,9 @@ const AllTransactionContainer = () => {
 
     // 페이징 처리를 위한 모든 트랜잭션 개수
     const [transactionCount, setTransactionCount] = useState(0);
+    console.log(transactionCount);
     // 총 페이지 개수
-    const allPageNum = parseInt(transactionCount / 10) - 1;
+    const allPageNum = parseInt(transactionCount / 10) + 1;
 
     // 해당 페이지의 트랜잭션들
     const [transactions, setTransactions] = useState([]);
