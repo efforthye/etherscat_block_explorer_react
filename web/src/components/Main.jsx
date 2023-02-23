@@ -138,7 +138,7 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                         </OneBlock>
                     )}
                     <div>
-                        <Link to={`/block`}>VIEW ALL Blocks <span style={{ fontSize: "18px" }}>&rarr;</span></Link>
+                        <Link to={`/allBlock/1`}>VIEW ALL Blocks <span style={{ fontSize: "18px" }}>&rarr;</span></Link>
                     </div>
                 </BNTWrap>
 
@@ -176,7 +176,7 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                         </OneTransaction>
                     )}
                     <div>
-                        <Link to={`/transaction`}>VIEW ALL Transactions <span style={{ fontSize: "18px" }}>&rarr;</span></Link>
+                        <Link to={`/allTransaction/1`}>VIEW ALL Transactions <span style={{ fontSize: "18px" }}>&rarr;</span></Link>
                     </div>
                 </BNTWrap>
             </InfoWrap>

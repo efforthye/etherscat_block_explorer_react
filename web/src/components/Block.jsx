@@ -21,35 +21,29 @@ const BlockComponent = ({ block, setSearch }) => {
                             {/* 예외처리하기(첫번째/마지막블록이면더이상안가지게) */}
                             <Link to={`/block/${(block?.number) - 1}`} onClick={() => {
                                 setSearch(block?.parentHash);
-                            }}><img style={{ width: "11px", margin: "0 10px" }} src={ArrowLeftIcon} alt="왼쪽" /></Link>
+                            }}><img style={{ width: "11px", margin: "0 10px", filter: "invert(48%) sepia(13%) saturate(313%) hue-rotate(166deg) brightness(91%) contrast(86%)" }} src={ArrowLeftIcon} alt="왼쪽" /></Link>
 
                             <Link to={`/block/${(block?.number) + 1}`} onClick={() => {
                                 setSearch((block?.number) + 1);
-                            }}><img style={{ width: "11px" }} src={ArrowRightIcon} alt="오른쪽" /></Link>
+                            }}><img style={{ width: "11px", filter: "invert(48%) sepia(13%) saturate(313%) hue-rotate(166deg) brightness(91%) contrast(86%)" }} src={ArrowRightIcon} alt="오른쪽" /></Link>
                         </Value>
                     </Content>
                     <Content>
                         <Key>difficulty :</Key>
                         <Value>{block?.difficulty}</Value>
                     </Content>
-
                     <Content>
                         <Key>extraData :</Key>
                         <Value>{block?.extraData}</Value>
                     </Content>
-
-
                     <Content>
                         <Key>gasLimit :</Key>
                         <Value>{block?.gasLimit}</Value>
                     </Content>
-
-
                     <Content style={{ borderBottom: "1px solid #E9ECEF" }}>
                         <Key>gasUsed :</Key>
                         <Value>{block?.gasUsed}</Value>
                     </Content>
-
                     <Content>
                         <Key>hash :</Key>
                         <Value>{block?.hash}</Value>
@@ -57,7 +51,13 @@ const BlockComponent = ({ block, setSearch }) => {
                     {/* 이동 */}
                     <Content>
                         <Key>miner :</Key>
-                        <Value>{block?.miner}</Value>
+                        <Value>
+                            <LinkDiv>
+                                <Link to={`/wallet/${block.miner}`}>
+                                    {block?.miner}
+                                </Link>
+                            </LinkDiv>
+                        </Value>
                     </Content>
                     <Content>
                         <Key>mixHash :</Key>
@@ -67,7 +67,6 @@ const BlockComponent = ({ block, setSearch }) => {
                         <Key>nonce :</Key>
                         <Value>{block?.nonce}</Value>
                     </Content>
-
                     {/* <div>logsBloom : {block?.logsBloom}</div> */}
                     <Content style={{ borderBottom: "1px solid #E9ECEF" }}>
                         <Key>
@@ -75,13 +74,12 @@ const BlockComponent = ({ block, setSearch }) => {
                         </Key>
                         <Value>
                             <LinkDiv>
-                                <Link to={`/block/${block.parentHash}`} onClick={(e) => {
+                                <Link to={`/block/${block?.parentHash}`} onClick={(e) => {
                                     setSearch(block?.parentHash);
                                 }}>{block?.parentHash}</Link>
                             </LinkDiv>
                         </Value>
                     </Content>
-
                     <Content>
                         <Key>receiptsRoot :</Key>
                         <Value>{block?.receiptsRoot}</Value>
@@ -128,6 +126,7 @@ const BottomText = styled.div`
     color: #6C757D;
     font-size: 13px;
     cursor: default;
+
 
 `;
 const AllWrap = styled.div`

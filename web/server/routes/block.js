@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 // web3 geth 서버
 const Web3 = require("web3");
+const { Block } = require("../models");
 const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8081"));
 
 
@@ -41,5 +42,27 @@ router.post("/latest", async (req, res) => {
 
     res.send(latestBlocks);
 });
+
+
+// 총 블록 개수
+router.post("/allCount", async (req, res) => {
+    const count = await web3.eth.getBlockNumber();
+    res.send(`${count}`);
+});
+
+// 해당 페이지의 모든 블록
+router.post("/allBlock", async (req, res) => {
+    const page = req.body.page;
+
+    // 20개의 최신 블록
+    const blocks = await Block.findAll({
+        limit: 20,
+        offset: 20 * page,
+        order: [["number", "DESC"]]
+    });
+
+    res.send(blocks);
+});
+
 
 module.exports = router;

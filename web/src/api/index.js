@@ -41,7 +41,6 @@ export const getAllBlock = async (page) => {
 
 // 트랜잭션 정보 요청 (해시)
 export const getTransactionInfo = async (txHash) => {
-    console.log(txHash);
     return (await request.post("/transaction/info", { hash: txHash })).data;
 }
 // 마지막 트랜잭션 6개 가져오는 요청 

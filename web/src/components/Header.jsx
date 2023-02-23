@@ -31,8 +31,8 @@ const HeaderComponent = ({ prices }) => {
           </Link>
         </div>
         <RouterLink>
-          <Link to={"/block"}>Block</Link>
-          <Link to={"/transaction"}>Transaction</Link>
+          <Link to={"/allBlock/1"}>Block</Link>
+          <Link to={"/allTransaction/1"}>Transaction</Link>
           <Link to={"/wallet"}>Wallet</Link>
           <Link to={"/mining"}>Mining</Link>
           <Link to={"/test"}>Test</Link>

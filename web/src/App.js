@@ -30,11 +30,11 @@ function App() {
           <Route path='/' element={<MainContainer />} />
 
           {/* 블록 */}
-          <Route path='/block' element={<AllBlockContainer />} />
+          <Route path='/allBlock/:page' element={<AllBlockContainer />} />
           <Route path='/block/:blockNumber' element={<BlockContainer />} />
 
           {/* 트랜잭션 */}
-          <Route path='/transaction' element={<AllTransactionContainer />} />
+          <Route path='/allTransaction/:page' element={<AllTransactionContainer />} />
           <Route path='/transaction/:transactionHash' element={<TransactionContainer />} />
 
           {/* 지갑 */}
@@ -60,9 +60,8 @@ function App() {
 export default App;
 
 const AllWrap = styled.div`
-  /* background-color: rgb(245,245,245); */
+  /* background-color: #FBFCFE; */
   *::selection{
-    /* background: #CDE6F3; */
     background: #0784c3;
     color: white;
   }
@@ -71,8 +70,4 @@ const Wrap = styled.div`
   margin: 0 auto;
   background-color: white;
   border-top: 1px solid rgb(245,245,245);
-  /* border-bottom: 1px solid rgb(245,245,245); */
-  /* width: 80%; */
-
-  /* height: 700px;  */
 `;
