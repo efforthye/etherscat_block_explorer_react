@@ -1,5 +1,4 @@
-
-// 타임스탬프 변환
+// 타임스탬프 일시분초 변환 함수
 const timestampFunc = (timestamp) => {
     // 현재 시간
     const nowTime = (new Date().getTime()) / 1000;
@@ -20,4 +19,21 @@ const timestampFunc = (timestamp) => {
     return { day, hour, minute, second, text }
 }
 
-export { timestampFunc }
+
+// 스크롤을 올리는 함수
+const moveTop = () => {
+    window.scrollTo({
+        top: 100,
+        behavior: "smooth",
+    });
+};
+
+// 해시를 잘라 단축하는 함수
+const sliceHash = (hash) => {
+    const left = hash.slice(0, 6);
+    const right = hash.slice(-6);
+    const newHash = `${left}...${right}`;
+    return newHash;
+}
+
+export { timestampFunc, moveTop, sliceHash }

@@ -11,7 +11,7 @@ import NonIcon from "../images/nog.png"
 import SoIcon from "../images/2204.png"
 import { Link, useNavigate } from "react-router-dom";
 import ApexChart from '../components/Chart.jsx';
-import { timestampFunc } from "../util";
+import { sliceHash, timestampFunc } from "../util";
 import Loading from "./Loding";
 
 const MainComponent = ({ blockInfo, latestBlocks, latestTransactions, loading }) => {
@@ -158,7 +158,7 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions, loading })
                             </IconWrap2>
                             <div>
                                 <LinkDiv key={`transactionLink-${index}`}>
-                                    <Link to={`/transaction/${transaction.hash}`}>{transaction.hash}</Link>
+                                    <Link to={`/transaction/${transaction.hash}`}>{sliceHash(transaction.hash)}</Link>
                                 </LinkDiv>
                                 <div style={{ height: "20px" }}>{timestampFunc(transaction.Block.timestamp).text} 전</div>
                             </div>
@@ -303,9 +303,12 @@ const OneTransaction = styled.div`
     &>div:not(:first-child){
         display: inline-block;
         margin-left: 25px;
-        width: 40%;
+        width: 20%;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    &>div:last-child{
+        width: 60%;
     }
 `;
 const IconWrap = styled.div`
