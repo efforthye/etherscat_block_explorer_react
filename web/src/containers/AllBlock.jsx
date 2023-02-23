@@ -31,7 +31,7 @@ const AllBlockContainer = () => {
     // 라우터에서 받아온 유저 선택 페이지 정보
     const location = useLocation();
     const params = location.pathname.split("/");
-    const [page, setPage] = useState(params[params.length - 1]);
+    const [page, setPage] = useState(+(params[params.length - 1]));
 
     // 페이지 로드시 요청
     useEffect(() => {
