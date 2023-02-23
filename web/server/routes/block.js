@@ -70,6 +70,7 @@ router.post("/info", async (req, res) => {
 router.post("/latest", async (req, res) => {
     const blocks = await Block.findAll({
         limit: 6,
+        include: { model: Transaction, as: "BlockTransactions" },
         order: [["number", "DESC"]]
     });
 

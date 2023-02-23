@@ -17,6 +17,7 @@ import Loading from "./Loding";
 const MainComponent = ({ blockInfo, latestBlocks, latestTransactions, loading }) => {
 
     // console.log(latestTransactions);
+    // console.log(latestBlocks[0]?.BlockTransactions?.length);
 
     // 라우터 이동
     const navigate = useNavigate();
@@ -138,7 +139,10 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions, loading })
                                     </LinkDiv>
                                 </div>
                                 {/* 해당 트랜잭션 상세 정보로 이동 */}
-                                <div key={`transactions-${index}`}>{block?.transactions?.length} txns in n secs</div>
+                                <div key={`transactions-${index}`}>
+                                    {/* {block?.BlockTransactions?.length} txns in n secs */}
+                                    {block?.BlockTransactions?.length} txns {block?.BlockTransactions?.length ? `in ${timestampFunc(block.timestamp).text}` : ""}
+                                </div>
                             </div>
                         </OneBlock>
                     )}
