@@ -11,6 +11,7 @@ import NonIcon from "../images/nog.png"
 import SoIcon from "../images/2204.png"
 import { Link, useNavigate } from "react-router-dom";
 import ApexChart from '../components/Chart.jsx';
+import { timestampFunc } from "../util";
 
 const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
 
@@ -122,7 +123,9 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                                     <Link to={`/block/${block.number}`}>{block.number}</Link>
                                 </LinkDiv>
                                 {/* 시간 moment 라이브러리 사용하여 변환하기 */}
-                                <div key={`timestamp-${index}`}>{block.timestamp}</div>
+                                <div key={`timestamp-${index}`}>{
+                                    timestampFunc(block.timestamp).text
+                                } 전</div>
                             </div>
 
                             <div>
@@ -133,7 +136,7 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                                     </LinkDiv>
                                 </div>
                                 {/* 해당 트랜잭션 상세 정보로 이동 */}
-                                <div key={`transactions-${index}`}>{block.transactions.length} txns in n secs</div>
+                                <div key={`transactions-${index}`}>{block?.transactions?.length} txns in n secs</div>
                             </div>
                         </OneBlock>
                     )}
@@ -154,7 +157,7 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions }) => {
                                 <LinkDiv key={`transactionLink-${index}`}>
                                     <Link to={`/transaction/${transaction.hash}`}>{transaction.hash}</Link>
                                 </LinkDiv>
-                                <div style={{ height: "20px" }}>{transaction.createdAt}</div>
+                                <div style={{ height: "20px" }}>{timestampFunc(transaction.Block.timestamp).text} 전</div>
                             </div>
                             <div>
                                 {/* 트랜잭션 지갑 */}
