@@ -190,7 +190,7 @@ export default MainComponent;
 
 
 const SearchBackground = styled.div`
-    background-image: url("../images/background5.jpg");
+    background-image: url("../images/background4.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;

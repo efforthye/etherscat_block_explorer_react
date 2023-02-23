@@ -28,14 +28,15 @@ function App() {
           <Route path='/' element={<MainContainer />} />
 
           {/* 블록 */}
-          <Route path='/block' element={<BlockContainer />} />
+          {/* <Route path='/block' element={<AllBlockContainer />} /> */}
           <Route path='/block/:blockNumber' element={<BlockContainer />} />
 
           {/* 트랜잭션 */}
-          <Route path='/transaction' element={<TransactionContainer />} />
+          {/* <Route path='/transaction' element={<AllTransactionContainer />} /> */}
           <Route path='/transaction/:transactionHash' element={<TransactionContainer />} />
 
           {/* 지갑 */}
+          {/* 지갑 라우터는 없애기 */}
           <Route path='/wallet' element={<WalletContainer />} />
           <Route path='/wallet/:account' element={<WalletContainer />} />
 

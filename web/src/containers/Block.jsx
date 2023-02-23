@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 // 블록 조회 함수
 const getBlock = (setBlock, search) => {
     getBlockInfo(search).then((block) => {
-        console.log(block);
         setBlock(block);
     });
 }
