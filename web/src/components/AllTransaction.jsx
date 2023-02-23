@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 const AllTransactionComponent = () => {
+
+
+
     return (
         <>
             <AllWrap>

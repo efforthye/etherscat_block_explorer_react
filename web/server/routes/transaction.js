@@ -1,4 +1,4 @@
-const { Transaction } = require("../models");
+const { Transaction, Block } = require("../models");
 
 // api/transaction
 const router = require("express").Router();
@@ -9,7 +9,8 @@ router.post("/latest", async (req, res) => {
     // 최신 6개 트랜잭션
     transactions = await Transaction.findAll({
         limit: 6,
-        // offset: 6, // 2페이지 ㅇㅇ
+        // 관계가 있는 놈 테이블까지 같이 불러옴
+        include: { model: Block },
         order: [["id", "DESC"]]
     });
     res.send(transactions);

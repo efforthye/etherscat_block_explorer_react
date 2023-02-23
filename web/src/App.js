@@ -39,7 +39,7 @@ function App() {
 
           {/* 지갑 */}
           {/* 지갑 라우터는 없애기 */}
-          <Route path='/wallet' element={<WalletContainer />} />
+          {/* <Route path='/wallet' element={<WalletContainer />} /> */}
           <Route path='/wallet/:account' element={<WalletContainer />} />
 
           {/* 마이닝 */}

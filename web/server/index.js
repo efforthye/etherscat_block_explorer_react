@@ -129,7 +129,7 @@ db.sequelize.sync({ force: false }).then(async () => {
                     console.log(await web3.eth.getBlockTransactionCount(i));
                     await web3.eth.getBlockTransactionCount(i, true, function (err, count) {
                         if (count > 0) {
-                            console.log(web3.eth.getBlock(i));
+                            // console.log(web3.eth.getBlock(i));
                             web3.eth.getBlock(i).then(async (blockInfo) => {
 
                                 await web3.eth.getBlock(i).then(async (blockInfo) => {
@@ -159,7 +159,7 @@ db.sequelize.sync({ force: false }).then(async () => {
                                             });
 
                                             // Block findOne (block(hash))
-                                            console.log(blockInfo.hash);
+                                            // console.log(blockInfo.hash);
                                             const block = await Block.findOne({
                                                 where: {
                                                     // hash: blockInfo.hash

@@ -126,8 +126,6 @@ const BottomText = styled.div`
     color: #6C757D;
     font-size: 13px;
     cursor: default;
-
-
 `;
 const AllWrap = styled.div`
     width: 70%;

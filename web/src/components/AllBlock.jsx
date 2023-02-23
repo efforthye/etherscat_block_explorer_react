@@ -45,12 +45,15 @@ const AllBlockComponent = ({ blocks, allPageNum, setPage, page }) => {
                             <BlockInfo>
                                 <span>{block?.number}</span>
                                 <span>{block?.hash}</span>
-                                <span>{block?.miner}</span>
+                                <LinkDiv2>
+                                    <Link to={`/wallet/${block?.miner}`}>
+                                        {block?.miner}
+                                    </Link>
+                                </LinkDiv2>
                             </BlockInfo>
                         </BlockWrap>
                     ))}
                 </BlocksWrap>
-
                 {/* 페이지 출력하는 함수 : 이전, 다음 만들기 */}
                 <PageWrap>
                     <LinkDiv>
@@ -145,6 +148,13 @@ const LinkDiv = styled.div`
         color: #2c2c2c;
         text-decoration: none;
         font-weight: 600;
+    }
+`;
+const LinkDiv2 = styled.div`
+    display: inline-block;
+    &>a{
+        color: #0784c3;
+        text-decoration: none;
     }
 `;
 const PageWrap = styled.div`

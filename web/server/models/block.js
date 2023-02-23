@@ -55,7 +55,7 @@ module.exports = class Block extends Sequelize.Model {
             // 블록 크기
             size: {
                 type: Sequelize.INTEGER.UNSIGNED,
-                allowNull: false,
+                allowNull: true,
             },
             // 블록의 상태
             stateRoot: {
@@ -70,7 +70,7 @@ module.exports = class Block extends Sequelize.Model {
             // 총 난이도
             totalDifficulty: {
                 type: Sequelize.INTEGER.UNSIGNED,
-                allowNull: false,
+                allowNull: true,
             },
             // 그 외 데이터
             receiptsRoot: {
