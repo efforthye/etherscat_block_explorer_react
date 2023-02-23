@@ -2,6 +2,8 @@
 // import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
+import AllBlockContainer from './containers/AllBlock';
+import AllTransactionContainer from './containers/AllTransaction';
 // import ApexChart from './components/Chart';
 // import ChartComponent from './components/Chart';
 import BlockContainer from './containers/Block';
@@ -28,11 +30,11 @@ function App() {
           <Route path='/' element={<MainContainer />} />
 
           {/* 블록 */}
-          {/* <Route path='/block' element={<AllBlockContainer />} /> */}
+          <Route path='/block' element={<AllBlockContainer />} />
           <Route path='/block/:blockNumber' element={<BlockContainer />} />
 
           {/* 트랜잭션 */}
-          {/* <Route path='/transaction' element={<AllTransactionContainer />} /> */}
+          <Route path='/transaction' element={<AllTransactionContainer />} />
           <Route path='/transaction/:transactionHash' element={<TransactionContainer />} />
 
           {/* 지갑 */}

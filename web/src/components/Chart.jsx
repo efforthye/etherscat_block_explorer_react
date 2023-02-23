@@ -33,7 +33,7 @@ const ChartComponent = () => {
                 },
                 title: {
                     // 차트 제목
-                    text: 'Ethereum Price Chart',
+                    text: 'Gas Price Chart',
                     // 제목 위치
                     align: 'left',
                     // 제목 스타일

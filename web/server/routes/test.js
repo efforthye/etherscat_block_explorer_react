@@ -8,6 +8,10 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const { Op } = require("sequelize");
 
+// web3 geth 서버
+const Web3 = require("web3");
+const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8081"));
+
 
 // api/test/new
 router.post("/new", async (req, res) => {
@@ -65,5 +69,19 @@ router.post("/crawler", async (req, res) => {
 
     res.send(info);
 });
+
+
+// api/test/getBalance
+router.post("/getBalance", async (req, res) => {
+    const account = req.body.account;
+
+    // web3로 요청
+    const balance = (await web3.eth.getBalance(account)) / Math.pow(10, 18);
+
+    res.send(`${balance}`);
+});
+
+
+
 
 module.exports = router;
