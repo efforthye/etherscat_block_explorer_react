@@ -19,20 +19,16 @@ const WalletComponent = ({ search, setSearch, transactions, balance }) => {
                     <div>account: <span>{balance} ETH</span></div>
                 </Title>
 
-                {/* 잔액 */}
 
-                <ContentWrap>
-
-
-                    {/* from.length가 있으면 보이게, 없으면 안보이게 */}
-                    <Title style={{ color: "#1f1f1f", borderBottom: "none", fontWeight: "500" }}>Transaction From</Title>
-
+                {/* from.length가 있으면 보이게, 없으면 안보이게 */}
+                <Title style={{ color: "#1f1f1f", borderBottom: "none", fontWeight: "500" }}>Transaction From</Title>
+                <Content>
                     {from?.length ? <>
                         <table border="0">
                             <th>hash</th>
                             <th>blockNumber</th>
                             <th>age</th>
-                            <th>from</th>
+                            {/* <th>from</th> */}
                             <th>to</th>
                             <th>value</th>
                             {/* for문 */}
@@ -45,7 +41,6 @@ const WalletComponent = ({ search, setSearch, transactions, balance }) => {
                                             </Link>
                                         </LinkDiv2>
                                     </Td>
-
                                     <Td style={{ width: "20%", height: "60px" }}>
                                         <LinkDiv2>
                                             <Link to={`/block/${item?.blockNumber}`}>
@@ -54,17 +49,18 @@ const WalletComponent = ({ search, setSearch, transactions, balance }) => {
                                         </LinkDiv2>
                                     </Td>
                                     <Td style={{ width: "20%" }}>{item?.createdAt}</Td>
-
-                                    <Td style={{ width: "20%", height: "60px" }}>
+                                    {/* <Td style={{ width: "20%", height: "60px" }}>
                                         <LinkDiv2>
                                             <Link to={`/wallet/${item?.from}`}>
                                                 {sliceHash(item?.from)}
                                             </Link>
                                         </LinkDiv2>
-                                    </Td>
+                                    </Td> */}
                                     <Td style={{ width: "20%", height: "60px" }}>
                                         <LinkDiv2>
-                                            <Link to={`/wallet/${item?.to}`}>
+                                            <Link to={`/wallet/${item?.to}`} onClick={() => {
+                                                setSearch(item?.to);
+                                            }}>
                                                 {sliceHash(item?.to)}
                                             </Link>
                                         </LinkDiv2>
@@ -76,20 +72,19 @@ const WalletComponent = ({ search, setSearch, transactions, balance }) => {
                     </> : <>
                         <div>보낸 트랜잭션이 없습니다.</div>
                     </>}
+                </Content>
 
 
-
-                    <Title style={{ color: "#1f1f1f", borderBottom: "none", marginTop: "10px" }}>Transaction To</Title>
-
+                <Title style={{ color: "#1f1f1f", borderBottom: "none", marginTop: "10px" }}>Transaction To</Title>
+                <Content>
                     {to?.length ? <>
                         <table border="0">
                             <th>hash</th>
                             <th>blockNumber</th>
                             <th>age</th>
                             <th>from</th>
-                            <th>to</th>
+                            {/* <th>to</th> */}
                             <th>value</th>
-                            {/* for문 */}
                             {to?.map((item, index) => (
                                 <Tr key={`transaction-${index}`}>
                                     <Td style={{ width: "16%", height: "60px" }}>
@@ -99,7 +94,6 @@ const WalletComponent = ({ search, setSearch, transactions, balance }) => {
                                             </Link>
                                         </LinkDiv2>
                                     </Td>
-
                                     <Td style={{ width: "20%", height: "60px" }}>
                                         <LinkDiv2>
                                             <Link to={`/block/${item?.blockNumber}`}>
@@ -108,21 +102,22 @@ const WalletComponent = ({ search, setSearch, transactions, balance }) => {
                                         </LinkDiv2>
                                     </Td>
                                     <Td style={{ width: "20%" }}>{item?.createdAt}</Td>
-
                                     <Td style={{ width: "20%", height: "60px" }}>
                                         <LinkDiv2>
-                                            <Link to={`/wallet/${item?.from}`}>
+                                            <Link to={`/wallet/${item?.from}`} onClick={() => {
+                                                setSearch(item?.from);
+                                            }}>
                                                 {sliceHash(item?.from)}
                                             </Link>
                                         </LinkDiv2>
                                     </Td>
-                                    <Td style={{ width: "20%", height: "60px" }}>
+                                    {/* <Td style={{ width: "20%", height: "60px" }}>
                                         <LinkDiv2>
                                             <Link to={`/wallet/${item?.to}`}>
                                                 {sliceHash(item?.to)}
                                             </Link>
                                         </LinkDiv2>
-                                    </Td>
+                                    </Td> */}
                                     <Td style={{ width: "20%" }}>{(item?.value) / Math.pow(10, 18)}ETH</Td>
                                 </Tr>
                             ))}
@@ -130,12 +125,8 @@ const WalletComponent = ({ search, setSearch, transactions, balance }) => {
                     </> : <>
                         <div>받은 트랜잭션이 없습니다.</div>
                     </>}
-
-                </ContentWrap>
-
+                </Content>
             </AllWrap>
-
-
         </>
     )
 }
@@ -144,6 +135,7 @@ export default WalletComponent;
 const AllWrap = styled.div`
     width: 70%;
     margin: 0 auto;
+    box-sizing: border-box;
 `;
 const MarginDiv = styled.div`
     background-color: rgb(245,245,245);
@@ -165,15 +157,14 @@ const Title = styled.div`
 `;
 
 
-const ContentWrap = styled.div`
-    margin: 10px 0;
-    overflow: hidden;
+const Content = styled.div`
+    padding: 20px 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px 1px rgb(64 60 67 / 20%);
+    border-radius: 10px;
     &>table{
         margin: 0 auto;
     }
-`;
-const Content = styled.div`
-    padding: 20px 10px;
 `;
 const Key = styled.div`
     /* background-color: rebeccapurple; */
