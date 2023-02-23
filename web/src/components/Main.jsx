@@ -5,7 +5,6 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import BlockIcon from "../images/block2.png"
 import EthereumIcon from "../images/ethereum.png"
 import TransactionIcon from "../images/transaction.png"
-import Transaction2Icon from "../images/transaction2.png"
 import Transaction3Icon from "../images/transaction3.png"
 import NonIcon from "../images/nog.png"
 import SoIcon from "../images/2204.png"
@@ -18,7 +17,6 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions, loading, p
 
     // console.log(latestTransactions);
     // console.log(latestBlocks[0]?.BlockTransactions?.length);
-    console.log(prices);
 
     // 라우터 이동
     const navigate = useNavigate();
