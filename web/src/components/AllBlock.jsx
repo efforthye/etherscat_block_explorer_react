@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Loading from "../components/Loding";
 
-const AllBlockComponent = ({ blocks, allPageNum, setPage, page }) => {
+const AllBlockComponent = ({ blocks, allPageNum, setPage, page, loading }) => {
 
-    console.log(blocks);
+    // console.log(blocks);
 
     // 페이지 배열
     const pagenation = (allPageNum) => {
@@ -27,6 +28,9 @@ const AllBlockComponent = ({ blocks, allPageNum, setPage, page }) => {
     return (
         <>
             <AllWrap>
+
+                {loading ? <Loading /> : null}
+
                 {/* 현재 블록 넘버 구해서 올리기 */}
                 <Title>Blocks</Title>
 

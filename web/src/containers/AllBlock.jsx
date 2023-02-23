@@ -11,14 +11,17 @@ const getCount = (setBlockCount) => {
 }
 
 // 모든 블록 요청(페이지, setState)
-const getBlocks = (page, setBlocks) => {
+const getBlocks = (page, setBlocks, setLoading) => {
     getAllBlock(page).then((allBlock) => {
         setBlocks(allBlock);
+        setLoading(false);
     });
 }
 
 
 const AllBlockContainer = () => {
+
+    const [loading, setLoading] = useState(true);
 
     // 블록 개수, 몇 개씩 띄울지 생각해보고 페이지 나누기
     const [blockCount, setBlockCount] = useState(0);
@@ -36,21 +39,21 @@ const AllBlockContainer = () => {
     // 페이지 로드시 요청
     useEffect(() => {
         getCount(setBlockCount);
-        getBlocks(page, setBlocks);
+        getBlocks(page, setBlocks, setLoading);
     }, []);
 
 
     // 페이지 바뀌면 다시 요청
     useEffect(() => {
         getCount(setBlockCount);
-        getBlocks(page, setBlocks);
+        getBlocks(page, setBlocks, setLoading);
     }, [page]);
 
 
     return (
         <>
             {/* props 보내기, 해당 페이지 버튼 만들기 ㅇㅇ */}
-            <AllBlockComponent blocks={blocks} allPageNum={allPageNum} setPage={setPage} page={page} />
+            <AllBlockComponent blocks={blocks} allPageNum={allPageNum} setPage={setPage} page={page} loading={loading} />
         </>
     )
 }

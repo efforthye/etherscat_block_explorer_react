@@ -26,16 +26,28 @@ const latestBlockArr = (setLatestBlocks) => {
 }
 
 // 마지막 트랜잭션 6개 요청 함수
-const latestTransactionArr = (setLatestTransactions) => {
+const latestTransactionArr = (setLatestTransactions, setLoading) => {
     // 해당 트랜잭션의 상세 정보를 불러와 setState한다.
     getLatestTransactions().then((transactionInfo) => {
         setLatestTransactions(transactionInfo);
+        setLoading(false);
         return transactionInfo; // void
     });
 }
 
 
 const MainContainer = () => {
+
+    const [loading, setLoading] = useState(true);
+
+    // 1초
+    useEffect(() => {
+        setTimeout(() => {
+            zeroBlock(setBlockInfo, 0);
+            latestBlockArr(setLatestBlocks);
+            latestTransactionArr(setLatestTransactions, setLoading);
+        }, 1000);
+    });
 
     // 블록 정보
     const [blockInfo, setBlockInfo] = useState([]);
@@ -47,11 +59,11 @@ const MainContainer = () => {
     useEffect(() => {
         zeroBlock(setBlockInfo, 0);
         latestBlockArr(setLatestBlocks);
-        latestTransactionArr(setLatestTransactions);
+        latestTransactionArr(setLatestTransactions, setLoading);
     }, []);
 
 
-    return <MainComponent blockInfo={blockInfo} latestBlocks={latestBlocks} latestTransactions={latestTransactions} />
+    return <MainComponent blockInfo={blockInfo} latestBlocks={latestBlocks} latestTransactions={latestTransactions} loading={loading} />
 }
 
 export default MainContainer;
