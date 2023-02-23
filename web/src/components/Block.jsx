@@ -9,6 +9,7 @@ const BlockComponent = ({ block, setSearch }) => {
         <>
             {/* 만약 block이 있으면 해당 블록 정보 출력하고, 아니면 전체 블록을 출력한다. */}
             {/* 전체 블록 가져오는 요청.. */}
+
             <AllWrap>
                 <BlockNumber>Block <span>#{block?.number}</span> </BlockNumber>
                 <ContentWrap>
