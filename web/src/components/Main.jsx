@@ -14,10 +14,11 @@ import ApexChart from '../components/Chart.jsx';
 import { sliceHash, timestampFunc } from "../util";
 import Loading from "./Loding";
 
-const MainComponent = ({ blockInfo, latestBlocks, latestTransactions, loading }) => {
+const MainComponent = ({ blockInfo, latestBlocks, latestTransactions, loading, prices }) => {
 
     // console.log(latestTransactions);
     // console.log(latestBlocks[0]?.BlockTransactions?.length);
+    console.log(prices);
 
     // 라우터 이동
     const navigate = useNavigate();
@@ -66,7 +67,8 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions, loading })
                         </PriceLeft>
                         <div>
                             <div>ETHER PRICE</div>
-                            <div>$1,659.04 (-2.72%)</div>
+                            {prices ? <div>{prices[0]} {prices[2]}</div> : <div>$1,659.04 (-2.72%)</div>}
+
                         </div>
                     </PriceWrap>
 
@@ -98,7 +100,7 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions, loading })
                         </PriceLeft>
                         <div>
                             <div>LAST FINALIZED BLOCK</div>
-                            <div>16682428</div>
+                            <div>{latestBlocks[0]?.number}</div>
                         </div>
                     </PriceWrap>
                 </ThreeWrap>
