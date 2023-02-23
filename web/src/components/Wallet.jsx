@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { sliceHash, timestampFunc } from "../util";
 
 const WalletComponent = ({ search, setSearch, transactions, balance }) => {
 
@@ -12,54 +14,124 @@ const WalletComponent = ({ search, setSearch, transactions, balance }) => {
     return (
         <>
             <AllWrap>
-                <MarginDiv>Address {search}</MarginDiv>
+                <Title>
+                    <div>Address <span>#{search}</span></div>
+                    <div>account: <span>{balance} ETH</span></div>
+                </Title>
 
                 {/* 잔액 */}
-                <MarginDiv>잔액 : {balance} ETH</MarginDiv>
 
-                {/* from.length가 있으면 보이게, 없으면 안보이게 */}
-                {from?.length ? <>
-                    <div>from</div>
-                    <div>
-                        {from?.map((item, index) => (
-                            // 해시, 블록넘버, from, to, value
-                            <MarginDiv key={`from-${index}`}>
-                                <div>hash:</div>
-                                <div>{item.hash}</div>
-                                <div>blockNumber:</div>
-                                <div>{item.blockNumber}</div>
-                                <div>from:</div>
-                                <div>{item.from}</div>
-                                <div>to:</div>
-                                <div>{item.to}</div>
-                                <div>value:</div>
-                                <div>{(item.value) / Math.pow(10, 18)}ETH</div>
-                            </MarginDiv>
-                        ))}
-                    </div>
-                </> : <></>}
+                <ContentWrap>
 
-                {/* to 도 from 처럼 ㄱㄱ~ */}
-                {to?.length ? <>
-                    <div>to</div>
-                    <div>
-                        {to?.map((item, index) => (
-                            // 해시, 블록넘버, from, to, value
-                            <MarginDiv key={`to-${index}`}>
-                                <div>hash:</div>
-                                <div>{item.hash}</div>
-                                <div>blockNumber:</div>
-                                <div>{item.blockNumber}</div>
-                                <div>from:</div>
-                                <div>{item.from}</div>
-                                <div>to:</div>
-                                <div>{item.to}</div>
-                                <div>value:</div>
-                                <div>{(item.value) / Math.pow(10, 18)}ETH</div>
-                            </MarginDiv>
-                        ))}
-                    </div>
-                </> : <></>}
+
+                    {/* from.length가 있으면 보이게, 없으면 안보이게 */}
+                    <Title style={{ color: "#1f1f1f", borderBottom: "none", fontWeight: "500" }}>Transaction From</Title>
+
+                    {from?.length ? <>
+                        <table border="0">
+                            <th>hash</th>
+                            <th>blockNumber</th>
+                            <th>age</th>
+                            <th>from</th>
+                            <th>to</th>
+                            <th>value</th>
+                            {/* for문 */}
+                            {from?.map((item, index) => (
+                                <Tr key={`transaction-${index}`}>
+                                    <Td style={{ width: "16%", height: "60px" }}>
+                                        <LinkDiv2>
+                                            <Link to={`/transaction/${item?.hash}`}>
+                                                {sliceHash(item?.hash)}
+                                            </Link>
+                                        </LinkDiv2>
+                                    </Td>
+
+                                    <Td style={{ width: "20%", height: "60px" }}>
+                                        <LinkDiv2>
+                                            <Link to={`/block/${item?.blockNumber}`}>
+                                                {item?.blockNumber}
+                                            </Link>
+                                        </LinkDiv2>
+                                    </Td>
+                                    <Td style={{ width: "20%" }}>{item?.createdAt}</Td>
+
+                                    <Td style={{ width: "20%", height: "60px" }}>
+                                        <LinkDiv2>
+                                            <Link to={`/wallet/${item?.from}`}>
+                                                {sliceHash(item?.from)}
+                                            </Link>
+                                        </LinkDiv2>
+                                    </Td>
+                                    <Td style={{ width: "20%", height: "60px" }}>
+                                        <LinkDiv2>
+                                            <Link to={`/wallet/${item?.to}`}>
+                                                {sliceHash(item?.to)}
+                                            </Link>
+                                        </LinkDiv2>
+                                    </Td>
+                                    <Td style={{ width: "20%" }}>{(item?.value) / Math.pow(10, 18)}ETH</Td>
+                                </Tr>
+                            ))}
+                        </table>
+                    </> : <>
+                        <div>보낸 트랜잭션이 없습니다.</div>
+                    </>}
+
+
+
+                    <Title style={{ color: "#1f1f1f", borderBottom: "none", marginTop: "10px" }}>Transaction To</Title>
+
+                    {to?.length ? <>
+                        <table border="0">
+                            <th>hash</th>
+                            <th>blockNumber</th>
+                            <th>age</th>
+                            <th>from</th>
+                            <th>to</th>
+                            <th>value</th>
+                            {/* for문 */}
+                            {to?.map((item, index) => (
+                                <Tr key={`transaction-${index}`}>
+                                    <Td style={{ width: "16%", height: "60px" }}>
+                                        <LinkDiv2>
+                                            <Link to={`/transaction/${item?.hash}`}>
+                                                {sliceHash(item?.hash)}
+                                            </Link>
+                                        </LinkDiv2>
+                                    </Td>
+
+                                    <Td style={{ width: "20%", height: "60px" }}>
+                                        <LinkDiv2>
+                                            <Link to={`/block/${item?.blockNumber}`}>
+                                                {item?.blockNumber}
+                                            </Link>
+                                        </LinkDiv2>
+                                    </Td>
+                                    <Td style={{ width: "20%" }}>{item?.createdAt}</Td>
+
+                                    <Td style={{ width: "20%", height: "60px" }}>
+                                        <LinkDiv2>
+                                            <Link to={`/wallet/${item?.from}`}>
+                                                {sliceHash(item?.from)}
+                                            </Link>
+                                        </LinkDiv2>
+                                    </Td>
+                                    <Td style={{ width: "20%", height: "60px" }}>
+                                        <LinkDiv2>
+                                            <Link to={`/wallet/${item?.to}`}>
+                                                {sliceHash(item?.to)}
+                                            </Link>
+                                        </LinkDiv2>
+                                    </Td>
+                                    <Td style={{ width: "20%" }}>{(item?.value) / Math.pow(10, 18)}ETH</Td>
+                                </Tr>
+                            ))}
+                        </table>
+                    </> : <>
+                        <div>받은 트랜잭션이 없습니다.</div>
+                    </>}
+
+                </ContentWrap>
 
             </AllWrap>
 
@@ -76,4 +148,74 @@ const AllWrap = styled.div`
 const MarginDiv = styled.div`
     background-color: rgb(245,245,245);
     margin: 20px 0;
+`;
+
+const Title = styled.div`
+    font-size: 18px;
+    font-weight: 600;
+    border-bottom: 1px solid #E9ECEF;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    & span{
+        font-size: 15px;
+        color: #6C757D;
+        font-weight: 500;
+    }
+`;
+
+
+const ContentWrap = styled.div`
+    margin: 10px 0;
+    overflow: hidden;
+    &>table{
+        margin: 0 auto;
+    }
+`;
+const Content = styled.div`
+    padding: 20px 10px;
+`;
+const Key = styled.div`
+    /* background-color: rebeccapurple; */
+    display: inline-block;
+    width: 25%;
+    color: #6C757D;
+
+`;
+const Value = styled.div`
+    display: inline-block;
+    &>a{
+        text-decoration: none;
+    }
+`;
+const LinkDiv = styled.div`
+    display: inline-block;
+    margin: 5px;
+    &>a{
+        color: #2c2c2c;
+        text-decoration: none;
+        font-weight: 600;
+    }
+`;
+const LinkDiv2 = styled.div`
+    display: inline-block;
+    &>a{
+        color: #0784c3;
+        text-decoration: none;
+    }
+`;
+const PageWrap = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    margin-top: 20px;
+`;
+const Tr = styled.tr`
+    margin: 10px 0;
+`;
+const Td = styled.td`
+    text-align: center;
+    /* overflow: hidden;
+    text-overflow: ellipsis; */
 `;

@@ -31,11 +31,13 @@ router.post("/account", async (req, res) => {
     const account = req.body.account;
 
     const from = await Transaction.findAll({
+        // include: { model: Block, as: "BlockTransactions" },
         where: {
             from: account
         }
     });
     const to = await Transaction.findAll({
+        // include: { model: Block, as: "BlockTransactions" },
         where: {
             to: account
         }
