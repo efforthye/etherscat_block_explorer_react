@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import EthereumIcon from "../images/ethereum2.png"
 
-const FooterComponent = ({ moveTop }) => {
+const FooterComponent = ({ moveTop, web3, request, nowAccount }) => {
     return (
         <>
             <AllWrap className="allWrap">
@@ -56,7 +56,26 @@ const FooterComponent = ({ moveTop }) => {
                     </FooterContent>
                     <FooterBottom>
                         <div>Etherscat @2023 (F1)</div>
-                        <div>Donations : <a href="/">ㅇ0ㅇ</a>❤</div>
+                        <div>Donations : <span onClick={async () => {
+                            const accounts = await web3.eth.getAccounts();
+                            const to = (await web3.eth.getAccounts())[(await web3.eth.getAccounts()).length - 1];
+
+                            alert("현재 계정 : " + nowAccount);
+                            alert(`${to}` + " 님에게 1ETH를 보냅니다.")
+
+                            window.ethereum.request({
+                                method: "eth_sendTransaction",
+                                params: [{
+                                    from: nowAccount.toString(),
+                                    to: to.toString(),
+                                    value: "0x" + (+1 * Math.pow(10, 18)).toString(16),
+                                }],
+                            }).then(async (result) => {
+                                console.log(result);
+                            }).catch((err) => {
+                                console.error(err);
+                            });
+                        }}>ㅇ0ㅇ</span>❤</div>
                     </FooterBottom>
                 </ContentWrap>
             </AllWrap>
@@ -140,8 +159,9 @@ const FooterBottom = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    &>div>a{
+    &>div>a, &>div>span{
         text-decoration: none;
         color: #0784c3;
+        cursor: pointer;
     }
 `;
