@@ -40,4 +40,4 @@ geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.cor
 
 
 # 개발
-- yarn install, yarn build, .env, config.json, 
+- yarn install, yarn build, .env, config.json mysql
