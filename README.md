@@ -13,6 +13,7 @@
 ```
 BUILD_PATH="./server/build"
 COOKIE_SECRET="happyworld"
+```
 2. Block-Explorer/web/server/config/config.json 파일에 맞게 mysql 스키마 생성
 3. Block-Explorer/web 경로까지 접근 후 yarn build
 4. Ubuntu에서 geth 서버를 열어 준다.
