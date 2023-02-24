@@ -7,50 +7,59 @@ module.exports = class Block extends Sequelize.Model {
             hash: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
+                defaultValue: "",
                 unique: true,
             },
             // 부모 블록의 해시 -> Block 연결
             parentHash: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
+                defaultValue: "",
                 unique: true,
             },
             // 채굴한 사람 -> Wallet 연결
             miner: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
+                defaultValue: "",
             },
             // 트랜잭션 루트 -> Transaction 연결?
             transactionsRoot: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
+                defaultValue: "",
                 unique: false, // 흠
             },
             // 블록 높이
             number: {
                 type: Sequelize.INTEGER.UNSIGNED,
                 allowNull: false,
+                defaultValue: 0,
                 unique: true,
             },
             // 블록 난이도
             difficulty: {
                 type: Sequelize.INTEGER.UNSIGNED,
                 allowNull: false,
+                defaultValue: 0,
             },
             // 가스 한도
             gasLimit: {
                 type: Sequelize.INTEGER.UNSIGNED,
                 allowNull: false,
+                defaultValue: 0,
             },
             // 사용된 가스
             gasUsed: {
                 type: Sequelize.INTEGER.UNSIGNED,
                 allowNull: false,
+                defaultValue: 0,
             },
             // 시도 횟수
             nonce: {
                 type: Sequelize.STRING(50),
                 allowNull: false,
+                defaultValue: "",
             },
             // 블록 크기
             size: {
@@ -61,11 +70,13 @@ module.exports = class Block extends Sequelize.Model {
             stateRoot: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
+                defaultValue: "",
             },
             // 생성시각
             timestamp: {
                 type: Sequelize.INTEGER.UNSIGNED,
                 allowNull: false,
+                defaultValue: 0,
             },
             // 총 난이도
             totalDifficulty: {

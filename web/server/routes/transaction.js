@@ -56,7 +56,7 @@ router.post("/allCount", async (req, res) => {
     // id를 desc로 정렬하여 limit 한개
     const count = (await Transaction.findOne({
         order: [["id", "DESC"]],
-    })).id;
+    }))?.id;
 
     res.send(`${count}`);
 });

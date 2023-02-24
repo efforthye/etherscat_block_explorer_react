@@ -435,3 +435,4 @@ const PriceLeft = styled.div`
         width: 30px;
     }
 `;
+
