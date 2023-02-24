@@ -1,9 +1,8 @@
 // 타임스탬프 일시분초 변환 함수
 const timestampFunc = (timestamp) => {
+
     // 현재 시간
     const nowTime = (new Date().getTime()) / 1000;
-    // 받은 시간
-    timestamp -= 60;
 
     // 시간 간격 (초단위 타임스탬프)
     let diffTime = nowTime - timestamp;
