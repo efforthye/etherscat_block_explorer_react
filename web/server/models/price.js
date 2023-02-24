@@ -7,10 +7,12 @@ module.exports = class Price extends Sequelize.Model {
             ethereum: {
                 type: Sequelize.STRING(20),
                 allowNull: false,
+                defaultValue: ""
             },
             gas: {
                 type: Sequelize.STRING(20),
                 allowNull: false,
+                defaultValue: ""
             }
         }, {
             // db 설정
