@@ -121,7 +121,7 @@ db.sequelize.sync({ force: false }).then(async () => {
                             }
                         });
                         // add where connected
-                        await wallet.addWalletBlocks(createdBlock);
+                        // await wallet.addWalletBlocks(createdBlock);
                     });
 
                     // insert Transaction baseData
