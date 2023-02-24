@@ -21,7 +21,7 @@ COOKIE_SECRET="happyworld"
 ```
 geth --datadir ~/myGeth --http --http.port 8081 --http.corsdomain "*" --http.api "admin,miner,txpool,web3,personal,eth,net" --allow-insecure-unlock --syncmode full --networkid 50 --ws --ws.port 8082 --ws.origins "*“ --maxpeers 0 console
 ```
-- node.js 버전 : 16 에러날 경우
+- node.js 버전 : 16 실행되지 않을 경우
 ```
 geth --datadir ~/myGeth --http --http.port 8081 --http.corsdomain "*" --http.api "admin,miner,txpool,web3,personal,eth,net" --allow-insecure-unlock --syncmode full --networkid 50 --ws --ws.port 8082 --ws.origins "*“ console
 ```
