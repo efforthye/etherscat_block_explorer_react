@@ -39,3 +39,5 @@ geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.cor
 - ws : 8082 port
 
 
+# 개발
+- yarn install, yarn build, .env, config.json, 
