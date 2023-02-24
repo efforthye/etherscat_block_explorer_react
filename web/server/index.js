@@ -13,16 +13,14 @@ const cors = require("cors");
 const routes = require("./routes/index.js");
 // web3
 const Web3 = require("web3");
+const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8081"));
 // websocket
 const websocket = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8082"));
+// database for base insert...
+const Wallet = require("./models/wallet.js");
+const Block = require("./models/block.js");
+const { Transaction } = require("./models/index.js");
 
-// block mining console
-// database 저장하기
-websocket.eth.subscribe("newBlockHeaders", (error, result) => {
-    if (!error) {
-        console.log(result);
-    }
-});
 
 dotenv.config();
 const app = express();
@@ -61,27 +59,133 @@ app.use(
     })
 );
 
-
 // 8082 websocket server open
-const web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8082"));
-web3.eth.subscribe("newBlockHeaders", (error, result) => {
+websocket.eth.subscribe("newBlockHeaders", (error, result) => {
     if (!error) {
-        console.log(result);
+        // console.log(result);
+        // 어찌 되었든, 감지를 하면 프론트 쪽으로 웹소켓을 보내야 하는듯??...
     }
 });
 
 // router : cors를 설정한 이후에 적용
 app.use("/api", routes);
 
+
 // database
-db.sequelize
-    .sync({ force: false })
-    .then(() => {
-        console.log("DB 연결됨");
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+db.sequelize.sync({ force: false }).then(async () => {
+    console.log("DB 연결됨");
+
+    // wallet 없으면 database 생성
+    if (!(await Wallet.findOne({ where: { id: 1 } }))) {
+        // transaction이 없으면 database 생성
+        // if (!(await Transaction.findOne({ where: { id: 1 } }))) {
+        // Wallet basedata insert
+        web3.eth.getAccounts().then(async (accounts) => {
+            // insert Wallet baseData
+            for (let i = 0; i < accounts.length; i++) {
+                await Wallet.findOrCreate({
+                    where: { account: accounts[i] },
+                });
+            }
+            // 모든 블록
+            await web3.eth.getBlockNumber().then(async (num) => {
+                for (let i = 1; i < num + 1; i++) {
+                    // for (let i = 0; i < num; i++) {
+                    // // insert Block baseData
+                    await web3.eth.getBlock(i).then(async (data) => {
+                        // insert Block
+                        const createdBlock = await Block.create({
+                            hash: data.hash,
+                            difficulty: data.difficulty,
+                            extraData: data.extraData,
+                            gasLimit: data.gasLimit,
+                            gasUsed: data.gasUsed,
+                            logsBloom: data.logsBloom,
+                            miner: data.miner,
+                            mixHash: data.mixHash,
+                            nonce: data.nonce,
+                            number: data.number,
+                            parentHash: data.parentHash,
+                            receiptsRoot: data.receiptsRoot,
+                            sha3Uncles: data.sha3Uncles,
+                            size: data.size,
+                            stateRoot: data.stateRoot,
+                            timestamp: data.timestamp,
+                            totalDifficulty: data.totalDifficulty,
+                            transactionsRoot: data.transactionsRoot,
+                        });
+                        // select Wallet
+                        const wallet = await Wallet.findOne({
+                            where: {
+                                account: data.miner
+                            }
+                        });
+                        // add where connected
+                        await wallet.addWalletBlocks(createdBlock);
+                    });
+
+                    // insert Transaction baseData
+                    // n번째 블록의 트랜잭션 개수 출력
+                    console.log(await web3.eth.getBlockTransactionCount(i));
+                    await web3.eth.getBlockTransactionCount(i, true, function (err, count) {
+                        if (count > 0) {
+                            // console.log(web3.eth.getBlock(i));
+                            web3.eth.getBlock(i).then(async (blockInfo) => {
+
+                                await web3.eth.getBlock(i).then(async (blockInfo) => {
+                                    const transactions = blockInfo.transactions;
+                                    for (let j = 0; j < transactions.length; j++) {
+                                        // 트랜잭션 해시로 트랜잭션 검색
+                                        await web3.eth.getTransaction(transactions[j]).then(async (transaction) => {
+                                            // Transaction Create
+                                            const createdTransaction = await Transaction.create({
+                                                blockHash: transaction.blockHash,
+                                                blockNumber: transaction.blockNumber,
+                                                from: transaction.from,
+                                                gas: transaction.gas,
+                                                gasPrice: transaction.gasPrice.toString(10),
+                                                hash: transaction.hash,
+                                                input: transaction.input,
+                                                nonce: transaction.nonce,
+                                                to: transaction.to,
+                                                // 한 블록의 트랜잭션 중 몇 번째인지
+                                                transactionIndex: transaction.transactionIndex,
+                                                value: transaction.value.toString(10),
+                                                type: transaction.type,
+                                                chainId: transaction.chainId,
+                                                v: transaction.v,
+                                                r: transaction.r,
+                                                s: transaction.s,
+                                            });
+
+                                            // Block findOne (block(hash))
+                                            // console.log(blockInfo.hash);
+                                            const block = await Block.findOne({
+                                                where: {
+                                                    // hash: blockInfo.hash
+                                                    hash: transaction.blockHash
+                                                }
+                                            });
+
+                                            // method insert
+                                            await block.addBlockTransactions(createdTransaction);
+
+                                        }); // getTransaction end
+                                    } // transactions for end
+                                }); // getBlock for end
+                            });
+                        }// transaction count end
+                    });
+                }// block for end
+            }); // getBlockNumber end
+        }); // getAccounts end 
+    } else {
+        console.log("Data 있음");
+    }
+}).catch((err) => {
+    console.log(err);
+});
+
 
 // 8080 express server open
 app.listen(app.get("port"), () => {
