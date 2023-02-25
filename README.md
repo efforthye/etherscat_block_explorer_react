@@ -35,5 +35,5 @@ geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.cor
 # 프로젝트 실행시 열리게 되는 포트
 - client(react-yarn) : 3000 port
 - server(node.js-express) : 8080 port
-- geth : 8081 port
-- ws : 8082 port(networkid 50)
+- geth : 8081 port(networkid 50)
+- ws : 8082 port
