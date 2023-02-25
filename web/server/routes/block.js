@@ -54,7 +54,7 @@ web3Socket.eth.subscribe("newBlockHeaders", async (error, data) => {
 // 해당 블록의 정보
 router.post("/info", async (req, res) => {
 
-    console.log(req.body.value);
+    // console.log(req.body.value);
 
     // 총 블록 개수
     // const newBlockNumber = await web3.eth.getBlockNumber();

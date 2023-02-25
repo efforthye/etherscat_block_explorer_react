@@ -47,15 +47,6 @@ const MainContainer = () => {
 
     const [loading, setLoading] = useState(true);
 
-    // 1초
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         zeroBlock(setBlockInfo, 0);
-    //         latestBlockArr(setLatestBlocks);
-    //         latestTransactionArr(setLatestTransactions, setLoading);
-    //     }, 1000);
-    // });
-
     // 블록 정보
     const [blockInfo, setBlockInfo] = useState([]);
     // 마지막 6개 블록 정보 배열

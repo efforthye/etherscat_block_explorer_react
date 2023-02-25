@@ -126,7 +126,7 @@ db.sequelize.sync({ force: false }).then(async () => {
 
                     // insert Transaction baseData
                     // n번째 블록의 트랜잭션 개수 출력
-                    console.log(await web3.eth.getBlockTransactionCount(i));
+                    // console.log(await web3.eth.getBlockTransactionCount(i));
                     await web3.eth.getBlockTransactionCount(i, true, function (err, count) {
                         if (count > 0) {
                             // console.log(web3.eth.getBlock(i));
