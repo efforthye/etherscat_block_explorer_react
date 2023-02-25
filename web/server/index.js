@@ -191,3 +191,5 @@ db.sequelize.sync({ force: false }).then(async () => {
 app.listen(app.get("port"), () => {
     console.log(`${app.get("port")} 서버를 열였습니다.`);
 });
+
+// assignment branch check
