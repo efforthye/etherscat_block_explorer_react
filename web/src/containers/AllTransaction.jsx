@@ -28,7 +28,7 @@ const AllTransactionContainer = () => {
 
     // 페이징 처리를 위한 모든 트랜잭션 개수
     const [transactionCount, setTransactionCount] = useState(0);
-    console.log(transactionCount);
+    // console.log(transactionCount);
     // 총 페이지 개수
     const allPageNum = parseInt(transactionCount / 10) + 1;
 

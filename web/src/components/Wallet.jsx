@@ -4,7 +4,7 @@ import { sliceHash, timestampFunc } from "../util";
 
 const WalletComponent = ({ search, setSearch, transactions, balance }) => {
 
-    console.log(transactions);
+    // console.log(transactions);
     const from = transactions?.from[0];
     const to = transactions?.to[0];
 
