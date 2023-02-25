@@ -29,7 +29,7 @@ geth --datadir ~/myGeth --http --http.port 8081 --http.corsdomain "*" --http.api
 ```
 geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.corsdomain "*" --http.api "admin,miner,txpool,web3,personal,eth,net" --allow-insecure-unlock --syncmode full --networkid 50 --ws --ws.port 8082 --ws.origins "*" console
 ```
-5. Block-Explorer/web 경로까지 접근 후 ```yarn start:server``` 으로 서버 실행 후 localhost:8080 에 접속하여 프로젝트에 접근합니다.
+5. Block-Explorer/web 경로까지 접근 후 ```yarn start:server``` 으로 서버 실행 후 localhost:8080 에 접속하여 프로젝트에 접근
 
 
 # 프로젝트 실행시 열리게 되는 포트
@@ -37,7 +37,3 @@ geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.cor
 - server(node.js-express) : 8080 port
 - geth : 8081 port(networkid 50)
 - ws : 8082 port
-
-
-# 개발
-- yarn install, yarn build, .env, config.json mysql
