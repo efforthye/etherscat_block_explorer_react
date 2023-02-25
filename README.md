@@ -43,7 +43,7 @@ geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.cor
 - block 채굴시 websocket subscribe newBlockHeaders 를 통해 실시간으로 db에 저장
 - etherscan.io 의 사이트를 크롤링하여 db에 최신 가격 정보를 저장하고 
   ethereum price와 gas price를 10초마다 web site에 랜더링
-- 메인 화면 : 최신 6개의 블록/트랜잭션 정보 및 로딩창/검색기능 구현
+- 메인 화면 : 최신 6개의 블록/트랜잭션 정보 및 로딩창/차트/검색기능 구현
 - 블록 : 모든 블록 정보 페이지 출력 및 페이징 처리와 라우터 구현
 - 트랜잭션 : 모든 트랜잭션 정보 페이지 출력 및 페이징 처리/라우터 구현
 - 지갑 : 해당 wallet의 transaction 정보 출력 및 해당 블록, 트랜잭션으로 라우팅
