@@ -1,5 +1,5 @@
 # Block-Explorer
-- 기간 : 2023. 2. 16.(목) ~ 2023. 2. 23.(목)
+- 기간 : 1 주일 (2023. 2. 16. ~ 2023. 2. 23.)
 - 개요 : 블록, 트랜잭션, 지갑 주소에 대한 모든 정보 확인
 - 참고 : Etherscan(https://etherscan.io/)
 - Stack : HTML/CSS/Javascript, React, Node.js, MySQL, MetaMask, Web3, Geth
@@ -37,3 +37,14 @@ geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.cor
 - server(node.js-express) : 8080 port
 - geth : 8081 port(networkid 50)
 - ws : 8082 port
+
+# 주요 기능
+- geth 서버와 연결된 block, transaction, wallet 정보들을 서버 실행시 db에 모두 저장
+- block 채굴시 websocket subscribe newBlockHeaders 를 통해 실시간으로 db에 저장
+- etherscan.io 의 사이트를 크롤링하여 db에 최신 가격 정보를 저장하고 
+  ethereum price와 gas price를 10초마다 web site에 랜더링
+- 메인 화면 : 최신 6개의 블록/트랜잭션 정보 및 로딩창 구현
+- 블록 : 모든 블록 정보 페이지 출력 및 페이징 처리와 라우터 구현
+- 트랜잭션 : 모든 트랜잭션 정보 페이지 출력 및 페이징 처리/라우터 구현
+- 지갑 : 해당 wallet의 transaction 정보 출력 및 해당 블록, 트랜잭션으로 라우팅
+- 헤더 개발 및 라우팅, 푸터 donation 클릭시 Metamask와 연결 및 1ETH 전송기능
