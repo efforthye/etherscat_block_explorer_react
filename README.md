@@ -15,7 +15,7 @@ BUILD_PATH="./server/build"
 COOKIE_SECRET="happyworld"
 ```
 2. Block-Explorer/web/server/config/config.json 파일에 맞게 mysql 스키마 생성
-3. Block-Explorer/web 경로까지 접근 후 yarn build
+3. Block-Explorer/web 경로까지 터미널 접근 후 yarn build
 4. Ubuntu에서 geth 서버를 열어 준다.
 - node.js 버전 : 16
 ```
@@ -29,7 +29,8 @@ geth --datadir ~/myGeth --http --http.port 8081 --http.corsdomain "*" --http.api
 ```
 geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.corsdomain "*" --http.api "admin,miner,txpool,web3,personal,eth,net" --allow-insecure-unlock --syncmode full --networkid 50 --ws --ws.port 8082 --ws.origins "*" console
 ```
-5. Block-Explorer/web 경로까지 접근 후 ```yarn start:server``` 으로 서버 실행 후 localhost:8080 에 접속하여 프로젝트에 접근
+5. Block-Explorer/server/index.js 파일의 force를 true로 바꿔 저장하고, 다시 false로 바꾸어 저장한다.
+6. Block-Explorer/web 경로까지 터미널 접근 후 ```yarn start:server``` 으로 서버 실행 후 localhost:8080 에 접속하여 프로젝트에 접근
 
 
 # 프로젝트 실행시 열리게 되는 포트
