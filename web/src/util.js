@@ -34,5 +34,12 @@ const sliceHash = (hash) => {
     const newHash = `${left}...${right}`;
     return newHash;
 }
+// 해시를 잘라 좀 길게단축하는 함수
+const sliceLongHash = (hash) => {
+    const left = hash.slice(0, 20);
+    const right = hash.slice(-20);
+    const newHash = `${left}...${right}`;
+    return newHash;
+}
 
-export { timestampFunc, moveTop, sliceHash }
+export { timestampFunc, moveTop, sliceHash, sliceLongHash }

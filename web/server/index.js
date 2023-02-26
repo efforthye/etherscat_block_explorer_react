@@ -94,26 +94,7 @@ db.sequelize.sync({ force: false }).then(async () => {
                     // // insert Block baseData
                     await web3.eth.getBlock(i).then(async (data) => {
                         // insert Block
-                        const createdBlock = await Block.create({
-                            hash: data.hash,
-                            difficulty: data.difficulty,
-                            extraData: data.extraData,
-                            gasLimit: data.gasLimit,
-                            gasUsed: data.gasUsed,
-                            logsBloom: data.logsBloom,
-                            miner: data.miner,
-                            mixHash: data.mixHash,
-                            nonce: data.nonce,
-                            number: data.number,
-                            parentHash: data.parentHash,
-                            receiptsRoot: data.receiptsRoot,
-                            sha3Uncles: data.sha3Uncles,
-                            size: data.size,
-                            stateRoot: data.stateRoot,
-                            timestamp: data.timestamp,
-                            totalDifficulty: data.totalDifficulty,
-                            transactionsRoot: data.transactionsRoot,
-                        });
+                        const createdBlock = await Block.create({ ...data });
                         // select Wallet
                         const wallet = await Wallet.findOne({
                             where: {
