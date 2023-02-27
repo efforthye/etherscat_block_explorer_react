@@ -75,14 +75,6 @@ geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.cor
 - 그 외 기본적인 것에서의 느낀 점
 5. 다른 웹 사이트를 크롤링하는 것은 웬만하면 프로젝트에 적용하지 않아야 겠다. (build 이후에 해당 사이트의 cors 정책에 걸린 탓인지 데이터를 성공적으로 긁어올 수 없었다.)
 6. 프로젝트를 개발하면서 열리는 포트가 많다 보니 사용 포트를 정리해 두면 편리하다는 것을 알았다.
-7. react component에서 map을 사용하면서 잘 몰랐던 소괄호() 바로리턴, 중괄호{return "hi"} 리턴 방법을 확실히 알게 되었다.
-    ```
-    // 소괄호 : 바로 리턴
-    list.map((item)=>(<div>이러면 바로 리턴됨</div>))
-    // 중괄호 : return 을 통하여 리턴
-    list.map((item)=>{
-      return <div>return 명령어를 통하여 리턴됨</div>
-    })
-    ```
+7. react component에서 map을 사용하면서 잘 몰랐던 소괄호 바로리턴`list.map((item)=>(<div>이러면 바로 리턴됨</div>))`, 중괄호 리턴`list.map((item)=>{return <div>return 명령어를 통하여 리턴됨</div>})` 방법을 확실히 알게 되었다.
 8. 내가 개발한 함수들 중에 자주 사용하는 함수는 프로젝트 최상단에 utils.js 등의 파일 내에 전역 함수로 만든후 export하여 언제나 쉽게 꺼내 사용할 수 있다는 것을 알게 되었다.
 
