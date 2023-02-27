@@ -60,19 +60,19 @@ geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.cor
 - 깃 레포지토리의 Issues 카테고리에 해결 등 상세한 내용이 적혀져 있습니다.
 
 # 프로젝트 도중 느낀점
-- server/db/통신 관련
+- ## server/db/통신 관련
 1. axios의 response는 웬만하면 객체에 감싸 보내는 것이 좋다는 것을 알았다.
 2. geth/server의 ws와 front/server의 ws가 다르다는 것과 그에맞는 사용법을 알게 되었다.
 3. cors 에러를 4개정도 직면해보니 이제 cors 에러는 확실히 잡을 수 있을 것 같다..
 4. 이번 프로젝트를 통해서 db model을 create할 때, db 컬럼과 내가 가진 data의 변수명 등의 키값이 동일하다면 ```model.create({title:data.title, text:data.text})```와 같은 수작업이 아닌, 스프레드 ```model.create({...data})``` 를 사용하여 db에 값을 쉽게 집어넣을 수 있다는 것을 알았다.
 5. 기존에 연결 관계를 설정하거나 값을 가져오는 방법을 알기는 했지만 더 쉽게 가져오는 방법은 몰랐는데, ```include``` 를 통하여 쉽게 연결된 데이터베이스의 값을 가져올 수 있다는 것을 알게되었다.
-- react 관련
+- ## react 관련
 1. 이번에 react의 component, container를 따로 구분해놓은 것은 좋았지만, 프로젝트의 내용이 많아질 수록 이번과 같은 방법이 아닌 components 폴더 내에 한 기능의 폴더`ex) header`를 만들고 그 안에 component, container.jsx/tsx 파일을 넣는 것이 개발하면서 파일 찾기에 좋을 것 같다.
 2. redux 등의 기술은 자주 사용하지 않으면 금방 잊어버릴 수 있으니 자주 사용해 봐야 할 것 같다.
 3. 마음에 드는 chart 등의 react 라이브러리를 생각보다 쉽게 가져와 커스텀하고 활용할 수 있다는 것을 알게 되었다.
-- git 관련
+- ## git 관련
 4. 깃허브 Issues 사용해보니 앞으로도 이슈 사항을 정리하기 좋을 것 같다.
-- 그 외 기본적인 것에서의 느낀 점
+- ## 그 외 기본적인 것에서의 느낀 점
 5. 다른 웹 사이트를 크롤링하는 것은 웬만하면 프로젝트에 적용하지 않아야 겠다. (build 이후에 해당 사이트의 cors 정책에 걸린 탓인지 데이터를 성공적으로 긁어올 수 없었다.)
 6. 프로젝트를 개발하면서 열리는 포트가 많다 보니 사용 포트를 정리해 두면 편리하다는 것을 알았다.
 7. react component에서 map을 사용하면서 잘 몰랐던 소괄호 바로리턴`list.map((item)=>(<div>이러면 바로 리턴됨</div>))`, 중괄호 리턴`list.map((item)=>{return <div>return 명령어를 통하여 리턴됨</div>})` 방법을 확실히 알게 되었다.
