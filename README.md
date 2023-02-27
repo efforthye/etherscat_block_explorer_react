@@ -50,6 +50,7 @@ geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.cor
 - 지갑 : 해당 wallet의 금액/속한트랜잭션 정보 출력 및 해당 블록, 트랜잭션으로 라우팅
 - 헤더 개발 및 라우팅, 푸터 donation 클릭시 Metamask와 연결 및 1ETH 전송기능
 
+
 # 이슈 사항
 - 깃 레포지토리의 Issues 카테고리에 해결 등 상세한 내용이 적혀져 있습니다.
 - 대표적인 이슈
@@ -82,3 +83,4 @@ geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.cor
     })
     ```
 13. 마음에 드는 chart 등의 react 라이브러리를 생각보다 쉽게 가져와 커스텀하고 활용할 수 있다는 것을 알게 되었다.
+
