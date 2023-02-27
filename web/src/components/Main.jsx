@@ -10,7 +10,7 @@ import NonIcon from "../images/nog.png"
 import SoIcon from "../images/2204.png"
 import { Link, useNavigate } from "react-router-dom";
 import ApexChart from '../components/Chart.jsx';
-import { sliceHash, timestampFunc } from "../util";
+import { sliceHash, sliceLongHash, timestampFunc } from "../util";
 import Loading from "./Loding";
 
 const MainComponent = ({ blockInfo, latestBlocks, latestTransactions, loading, prices }) => {
@@ -44,7 +44,7 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions, loading, p
                         <option value="wallet">wallet</option>
 
                     </SearchSelect>
-                    <SearchInput placeholder="Search By Address / Txn Hash / Block / Token / Domain Name" onKeyUp={(e) => {
+                    <SearchInput placeholder="Search By Block / Txn Hash / Wallet Address" onKeyUp={(e) => {
                         setSearch(e.target.value); // input value
                         handleKeyPress(e); // enter
                     }} />
@@ -135,12 +135,11 @@ const MainComponent = ({ blockInfo, latestBlocks, latestTransactions, loading, p
                                 {/* 해당 채굴자 Wallet 상세 정보로 이동 */}
                                 <div key={`miner-${index}`}>
                                     <LinkDiv>
-                                        <Link to={`/wallet/${block.miner}`}>{block.miner}</Link>
+                                        miner : <Link to={`/wallet/${block.miner}`}>{sliceLongHash(block.miner)}</Link>
                                     </LinkDiv>
                                 </div>
                                 {/* 해당 트랜잭션 상세 정보로 이동 */}
                                 <div key={`transactions-${index}`}>
-                                    {/* {block?.BlockTransactions?.length} txns in n secs */}
                                     {block?.BlockTransactions?.length} txns {block?.BlockTransactions?.length ? `in ${timestampFunc(block.timestamp).text}` : ""}
                                 </div>
                             </div>
