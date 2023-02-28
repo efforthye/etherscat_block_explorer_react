@@ -23,6 +23,8 @@ geth --datadir ~/myGeth --http --http.port 8081 --http.corsdomain "*" --http.api
 ```
 - node.js 버전 : 16 실행되지 않을 경우
 ```
+source ~/.bashrc
+
 geth --datadir ~/myGeth --http --http.port 8081 --http.corsdomain "*" --http.api "admin,miner,txpool,web3,personal,eth,net" --allow-insecure-unlock --syncmode full --networkid 50 --ws --ws.port 8082 --ws.origins "*“ console
 ```
 - node.js 버전 : 18

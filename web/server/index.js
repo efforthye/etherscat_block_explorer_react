@@ -77,8 +77,6 @@ db.sequelize.sync({ force: false }).then(async () => {
 
     // wallet 없으면 database 생성
     if (!(await Wallet.findOne({ where: { id: 1 } }))) {
-        // transaction이 없으면 database 생성
-        // if (!(await Transaction.findOne({ where: { id: 1 } }))) {
         // Wallet basedata insert
         web3.eth.getAccounts().then(async (accounts) => {
             // insert Wallet baseData
@@ -119,25 +117,7 @@ db.sequelize.sync({ force: false }).then(async () => {
                                         // 트랜잭션 해시로 트랜잭션 검색
                                         await web3.eth.getTransaction(transactions[j]).then(async (transaction) => {
                                             // Transaction Create
-                                            const createdTransaction = await Transaction.create({
-                                                blockHash: transaction.blockHash,
-                                                blockNumber: transaction.blockNumber,
-                                                from: transaction.from,
-                                                gas: transaction.gas,
-                                                gasPrice: transaction.gasPrice.toString(10),
-                                                hash: transaction.hash,
-                                                input: transaction.input,
-                                                nonce: transaction.nonce,
-                                                to: transaction.to,
-                                                // 한 블록의 트랜잭션 중 몇 번째인지
-                                                transactionIndex: transaction.transactionIndex,
-                                                value: transaction.value.toString(10),
-                                                type: transaction.type,
-                                                chainId: transaction.chainId,
-                                                v: transaction.v,
-                                                r: transaction.r,
-                                                s: transaction.s,
-                                            });
+                                            const createdTransaction = await Transaction.create({ ...transaction });
 
                                             // Block findOne (block(hash))
                                             // console.log(blockInfo.hash);
@@ -172,3 +152,4 @@ db.sequelize.sync({ force: false }).then(async () => {
 app.listen(app.get("port"), () => {
     console.log(`${app.get("port")} 서버를 열였습니다.`);
 });
+
