@@ -22,7 +22,7 @@ COOKIE_SECRET="happyworld"
 7. Block-Explorer/web 경로까지 터미널 접근 후 yarn start 명령어 입력
 
 
-# 프로젝트 실행방법(배포 확인)
+# 프로젝트 실행방법(빌드 확인)
 1. Block-Explorer/web 폴더에 .env 파일 생성 후 아래의 내용 입력 및 저장
 ```
 BUILD_PATH="./server/build"
