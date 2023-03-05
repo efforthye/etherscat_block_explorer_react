@@ -1,4 +1,4 @@
-// api/
+// /api
 const router = require("express").Router();
 
 const test = require("./test.js");

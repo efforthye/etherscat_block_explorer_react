@@ -14,7 +14,7 @@ module.exports = class Transaction extends Sequelize.Model {
             hash: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
-                unique: true, // n : n
+                unique: true,
             },
             blockHash: {
                 type: Sequelize.STRING(100),
@@ -71,8 +71,8 @@ module.exports = class Transaction extends Sequelize.Model {
 
         }, {
             sequelize,
-            modelName: "Transaction", // js
-            tableName: "transaction", // db
+            modelName: "Transaction",
+            tableName: "transaction",
             paranoid: true,
             timestamps: true,
             underscored: false,
@@ -89,14 +89,5 @@ module.exports = class Transaction extends Sequelize.Model {
             targetKey: "hash"
         });
 
-        // wallet n : transaction n
-        db.Transaction.belongsToMany(db.Wallet, {
-            through: "userTransaction",
-            as: "TransactionWallet", // addTransactionWallet
-            foreignKey: "transactionHash",
-            sourceKey: "hash", // unique
-            onDelete: "cascade",
-            // timestamps: true
-        });
     }
 }

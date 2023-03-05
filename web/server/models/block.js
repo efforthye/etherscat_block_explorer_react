@@ -3,87 +3,73 @@ const Sequelize = require("sequelize");
 module.exports = class Block extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
-            // 블록 해시 -> Transaction에 가져감
             hash: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
                 defaultValue: "",
                 unique: true,
             },
-            // 부모 블록의 해시 -> Block 연결
             parentHash: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
                 defaultValue: "",
                 unique: true,
             },
-            // 채굴한 사람 -> Wallet 연결
             miner: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
                 defaultValue: "",
             },
-            // 트랜잭션 루트 -> Transaction 연결?
             transactionsRoot: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
                 defaultValue: "",
                 unique: false, // 흠
             },
-            // 블록 높이
             number: {
                 type: Sequelize.INTEGER.UNSIGNED,
                 allowNull: false,
                 defaultValue: 0,
                 unique: true,
             },
-            // 블록 난이도
             difficulty: {
                 type: Sequelize.INTEGER.UNSIGNED,
                 allowNull: false,
                 defaultValue: 0,
             },
-            // 가스 한도
             gasLimit: {
                 type: Sequelize.INTEGER.UNSIGNED,
                 allowNull: false,
                 defaultValue: 0,
             },
-            // 사용된 가스
             gasUsed: {
                 type: Sequelize.INTEGER.UNSIGNED,
                 allowNull: false,
                 defaultValue: 0,
             },
-            // 시도 횟수
             nonce: {
                 type: Sequelize.STRING(50),
                 allowNull: false,
                 defaultValue: "",
             },
-            // 블록 크기
             size: {
                 type: Sequelize.INTEGER.UNSIGNED,
                 allowNull: true,
             },
-            // 블록의 상태
             stateRoot: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
                 defaultValue: "",
             },
-            // 생성시각
             timestamp: {
                 type: Sequelize.INTEGER.UNSIGNED,
                 allowNull: false,
                 defaultValue: 0,
             },
-            // 총 난이도
             totalDifficulty: {
                 type: Sequelize.INTEGER.UNSIGNED,
                 allowNull: true,
             },
-            // 그 외 데이터
             receiptsRoot: {
                 type: Sequelize.STRING(100),
                 allowNull: true,
@@ -104,12 +90,6 @@ module.exports = class Block extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: true,
             },
-            // 보상받은 ETH(새로 생성한 컬럼) 
-            etherPrice: {
-                type: Sequelize.STRING(100),
-                allowNull: true,
-                defaultValue: "0",
-            },
         }, {
             sequelize,
             modelName: "Block", // js
@@ -126,17 +106,11 @@ module.exports = class Block extends Sequelize.Model {
 
         // block 1 : transaction n
         db.Block.hasMany(db.Transaction, {
-            as: "BlockTransactions", // addBlockTransactions
+            as: "BlockTransactions",
             sourceKey: "hash",
             foreignKey: "blockHash"
         });
 
-        // wallet 1 : block n
-        db.Block.belongsTo(db.Wallet, {
-            foreignKey: "walletAccount",
-            targetKey: "account",
-        });
-
     }
 }
-// uncles(x), transactions table
+// uncles(x), transactions(table)

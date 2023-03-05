@@ -1,5 +1,3 @@
-// 'use strict';
-
 const Sequelize = require('sequelize');
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
@@ -8,9 +6,8 @@ const config = require(__dirname + '/../config/config.json')[env];
 const Test = require("./test.js");
 const Block = require("./block.js");
 const Transaction = require("./transaction.js");
-const Wallet = require("./wallet.js");
 const Price = require("./price.js");
-const db = { Test, Block, Transaction, Wallet, Price };
+const db = { Test, Block, Transaction, Price };
 
 let sequelize = new Sequelize(config.database, config.username, config.password, config);
 
@@ -18,7 +15,6 @@ let sequelize = new Sequelize(config.database, config.username, config.password,
 Test.init(sequelize);
 Block.init(sequelize);
 Transaction.init(sequelize);
-Wallet.init(sequelize);
 Price.init(sequelize);
 
 Object.keys(db).forEach(modelName => {
