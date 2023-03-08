@@ -90,6 +90,11 @@ module.exports = class Block extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: true,
             },
+            transactionCount: {
+                type: Sequelize.INTEGER.UNSIGNED,
+                allowNull: true,
+                defaultValue: 0
+            }
         }, {
             sequelize,
             modelName: "Block", // js

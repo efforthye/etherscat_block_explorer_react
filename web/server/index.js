@@ -9,13 +9,11 @@ const db = require("./models/index.js");
 const cors = require("cors");
 const routes = require("./routes/index.js");
 
-const Wallet = require("./models/wallet.js");
 const Block = require("./models/block.js");
 const { Transaction } = require("./models/index.js");
 
 const Web3 = require("web3");
 const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8081"));
-const websocket = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8082"));
 
 dotenv.config();
 const app = express();
@@ -30,8 +28,11 @@ app.use(
 );
 
 app.use((req, res, next) => {
-    if (process.env.NODE_ENV === "production") morgan("combined")(req, res, next);
-    else morgan("dev")(req, res, next);
+    if (process.env.NODE_ENV === "production") {
+        morgan("combined")(req, res, next);
+    } else {
+        morgan("dev")(req, res, next);
+    }
 });
 
 app.use("/", express.static(path.join(__dirname, "build")));
@@ -51,13 +52,6 @@ app.use(
         name: "session-cookie",
     })
 );
-
-websocket.eth.subscribe("newBlockHeaders", (error, result) => {
-    if (!error) {
-        console.log(result);
-    }
-});
-
 
 // router : cors 설정 이후 적용
 app.use("/api", routes);
@@ -87,28 +81,13 @@ db.sequelize.sync({ force: true }).then(async () => {
                             await web3.eth.getTransaction(blockTransactions[j]).then(async (transaction) => {
 
                                 const createdTransaction = await Transaction.create({
-                                    blockHash: transaction.blockHash,
-                                    blockNumber: transaction.blockNumber,
-                                    from: transaction.from,
-                                    gas: transaction.gas,
+                                    ...transaction,
                                     gasPrice: transaction.gasPrice.toString(10),
-                                    hash: transaction.hash,
-                                    input: transaction.input,
-                                    nonce: transaction.nonce,
-                                    to: transaction.to,
-                                    transactionIndex: transaction.transactionIndex,
                                     value: transaction.value.toString(10),
-                                    type: transaction.type,
-                                    chainId: transaction.chainId,
-                                    v: transaction.v,
-                                    r: transaction.r,
-                                    s: transaction.s,
                                 });
 
                                 const block = await Block.findOne({
-                                    where: {
-                                        hash: transaction.blockHash
-                                    }
+                                    where: { hash: transaction.blockHash }
                                 });
 
                                 await block.addBlockTransactions(createdTransaction);
@@ -120,7 +99,6 @@ db.sequelize.sync({ force: true }).then(async () => {
             });
         }
     });
-
 }).catch((err) => {
     console.log(err);
 });
