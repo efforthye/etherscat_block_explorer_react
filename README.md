@@ -26,7 +26,7 @@ COOKIE_SECRET="happyworld"
 1. Block-Explorer/web 폴더에 .env 파일 생성 후 아래의 내용 입력 및 저장
 ```
 BUILD_PATH="./server/build"
-COOKIE_SECRET="happyworld"
+COOKIE_SECRET="happyworld" 
 ```
 2. Block-Explorer/web/server/config/config.json 파일에 맞게 mysql 스키마 생성
 3. Block-Explorer/web 경로까지 터미널 접근 후 yarn build
