@@ -69,7 +69,7 @@ geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.cor
 - 지갑 : 해당 wallet의 금액/속한트랜잭션 정보 출력 및 해당 블록, 트랜잭션으로 라우팅
 - 헤더 개발 및 라우팅, 푸터 donation 클릭시 Metamask와 연결 및 1ETH 전송기능
 
-
+<!--
 # 대표적인 이슈 사항
 1. react/node.js/geth 연결 도중 발생한 cors error
 2. axios 등의 통신 도중 발생한 response type error
@@ -97,4 +97,4 @@ geth --datadir ~/myGeth --http --http.addr "0.0.0.0" --http.port 8081 --http.cor
 2. 프로젝트를 개발하면서 열리는 포트가 많다 보니 사용 포트를 정리해 두면 편리하다는 것을 알았다.
 3. react component에서 map을 사용하면서 잘 몰랐던 소괄호 바로리턴`list.map((item)=>(<div>이러면 바로 리턴됨</div>))`, 중괄호 리턴`list.map((item)=>{return <div>return 명령어를 통하여 리턴됨</div>})` 방법을 확실히 알게 되었다.
 4. 내가 개발한 함수들 중에 자주 사용하는 함수는 프로젝트 최상단에 utils.js 등의 파일 내에 전역 함수로 만든후 export하여 언제나 쉽게 꺼내 사용할 수 있다는 것을 알게 되었다.
-
+-->
